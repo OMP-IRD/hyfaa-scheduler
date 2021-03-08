@@ -1,0 +1,28 @@
+
+statvars:
+  soil_moisture: true
+  water_baseflow_reservoir: true
+  water_subsurface_reservoir: true
+  water_surface_volume: true
+  temperature: true
+  water_canopy_interception_volume: true
+  runoff_generation: true
+  #streamflow_catchment muse be set to true
+  streamflow_catchment: true
+  water_depth_catchment: true
+  previous_water_storage_catchment: true
+  flooded_area_catchment: true
+  updated_flow_interconnections: true
+parameters:
+  activate: true
+  param_list:
+    manning_coefficient: true
+    river_depth: true
+    river_width: true
+    main_river_slope: false
+#localization option is being implemented, not available yet, do not use
+localization: 
+  activate: false
+  method: velocity
+  velocity_file: ${hyfaa_workdir}/input_data/mean_velocity.csv
+  lengthscale: 10

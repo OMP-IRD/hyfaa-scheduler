@@ -1,0 +1,600 @@
+R_NIGER_ALIBORI_KM1485:
+  coeff_A: 4.378
+  coeff_B: 1.684
+  coeff_Z0: 216.514
+  lat: 11.295
+  lon: 2.776
+  mesh_id: 9759
+  ratio_uncertainty: 0.1311
+R_NIGER_BAGOE_KM3590:
+  coeff_A: 71.354
+  coeff_B: 1.001
+  coeff_Z0: 288.176
+  lat: 11.24
+  lon: -6.55
+  mesh_id: 3880
+  ratio_uncertainty: 0.0714
+R_NIGER_BANI_KM3034:
+  coeff_A: 49.265
+  coeff_B: 1.011
+  coeff_Z0: 261.605
+  lat: 13.944
+  lon: -4.376
+  mesh_id: 4142
+  ratio_uncertainty: 0.10343000000000001
+R_NIGER_BAOULE_KM3429:
+  coeff_A: 94.663
+  coeff_B: 1.003
+  coeff_Z0: 278.244
+  lat: 12.518
+  lon: -6.853
+  mesh_id: 4039
+  ratio_uncertainty: 0.07795
+R_NIGER_BAOULE_KM3789:
+  coeff_A: 21.416
+  coeff_B: 1.0
+  coeff_Z0: 315.127
+  lat: 11.281
+  lon: -7.631
+  mesh_id: 3760
+  ratio_uncertainty: 0.1195
+R_NIGER_BENUE_KM0557:
+  coeff_A: 364.908
+  coeff_B: 1.652
+  coeff_Z0: 37.124
+  lat: 7.945
+  lon: 7.086
+  mesh_id: 11385
+  ratio_uncertainty: 0.10142
+R_NIGER_BENUE_KM0578:
+  coeff_A: 399.733
+  coeff_B: 1.671
+  coeff_Z0: 39.735
+  lat: 8.014
+  lon: 7.257
+  mesh_id: 11381
+  ratio_uncertainty: 0.09167
+R_NIGER_BENUE_KM0638:
+  coeff_A: 398.808
+  coeff_B: 1.648
+  coeff_Z0: 47.002
+  lat: 8.001
+  lon: 7.749
+  mesh_id: 11367
+  ratio_uncertainty: 0.08392
+R_NIGER_BENUE_KM0670:
+  coeff_A: 394.659
+  coeff_B: 1.685
+  coeff_Z0: 51.569
+  lat: 7.942
+  lon: 8.02
+  mesh_id: 11361
+  ratio_uncertainty: 0.09928000000000001
+R_NIGER_BENUE_KM0697:
+  coeff_A: 395.411
+  coeff_B: 1.627
+  coeff_Z0: 54.949
+  lat: 7.861
+  lon: 8.23
+  mesh_id: 11355
+  ratio_uncertainty: 0.10396000000000001
+R_NIGER_BENUE_KM0785:
+  coeff_A: 382.159
+  coeff_B: 1.516
+  coeff_Z0: 66.993
+  lat: 7.829
+  lon: 8.932
+  mesh_id: 11335
+  ratio_uncertainty: 0.09727000000000001
+R_NIGER_BENUE_KM0814:
+  coeff_A: 398.942
+  coeff_B: 1.472
+  coeff_Z0: 70.502
+  lat: 7.907
+  lon: 9.152
+  mesh_id: 11326
+  ratio_uncertainty: 0.08413999999999999
+R_NIGER_BENUE_KM0927:
+  coeff_A: 395.462
+  coeff_B: 1.581
+  coeff_Z0: 88.002
+  lat: 8.329
+  lon: 9.976
+  mesh_id: 11282
+  ratio_uncertainty: 0.08631
+R_NIGER_BENUE_KM0929:
+  coeff_A: 399.453
+  coeff_B: 1.598
+  coeff_Z0: 88.368
+  lat: 8.34
+  lon: 9.99
+  mesh_id: 11282
+  ratio_uncertainty: 0.09637000000000001
+R_NIGER_BENUE_KM1000:
+  coeff_A: 330.139
+  coeff_B: 1.54
+  coeff_Z0: 98.723
+  lat: 8.684
+  lon: 10.339
+  mesh_id: 11254
+  ratio_uncertainty: 0.07783000000000001
+R_NIGER_BENUE_KM1062:
+  coeff_A: 395.213
+  coeff_B: 1.454
+  coeff_Z0: 106.9
+  lat: 8.757
+  lon: 10.831
+  mesh_id: 11230
+  ratio_uncertainty: 0.10049
+R_NIGER_BENUE_KM1123:
+  coeff_A: 385.183
+  coeff_B: 1.588
+  coeff_Z0: 116.608
+  lat: 9.153
+  lon: 11.097
+  mesh_id: 11186
+  ratio_uncertainty: 0.12869999999999998
+R_NIGER_BENUE_KM1194:
+  coeff_A: 225.247
+  coeff_B: 1.967
+  coeff_Z0: 128.436
+  lat: 9.434
+  lon: 11.614
+  mesh_id: 11137
+  ratio_uncertainty: 0.12564999999999998
+R_NIGER_BENUE_KM1256:
+  coeff_A: 396.67
+  coeff_B: 1.645
+  coeff_Z0: 141.124
+  lat: 9.486
+  lon: 12.107
+  mesh_id: 11092
+  ratio_uncertainty: 0.10470000000000002
+R_NIGER_BENUE_KM1325:
+  coeff_A: 399.932
+  coeff_B: 1.528
+  coeff_Z0: 154.307
+  lat: 9.235
+  lon: 12.549
+  mesh_id: 11025
+  ratio_uncertainty: 0.12609
+R_NIGER_BENUE_KM1330:
+  coeff_A: 391.743
+  coeff_B: 1.577
+  coeff_Z0: 155.311
+  lat: 9.246
+  lon: 12.591
+  mesh_id: 11015
+  ratio_uncertainty: 0.12776
+R_NIGER_BENUE_KM1390:
+  coeff_A: 62.604
+  coeff_B: 3.058
+  coeff_Z0: 167.245
+  lat: 9.306
+  lon: 13.002
+  mesh_id: 10957
+  ratio_uncertainty: 0.07732
+R_NIGER_BUI_KM0904:
+  coeff_A: 29.187
+  coeff_B: 1.475
+  coeff_Z0: 87.918
+  lat: 8.263
+  lon: 9.354
+  mesh_id: 9848
+  ratio_uncertainty: 0.13928000000000001
+R_NIGER_DONGA_KM0949:
+  coeff_A: 329.497
+  coeff_B: 1.003
+  coeff_Z0: 95.212
+  lat: 8.179
+  lon: 10.026
+  mesh_id: 10591
+  ratio_uncertainty: 0.13712
+R_NIGER_DONGA_KM1041:
+  coeff_A: 265.827
+  coeff_B: 1.024
+  coeff_Z0: 123.897
+  lat: 7.632
+  lon: 10.15
+  mesh_id: 10170
+  ratio_uncertainty: 0.16197
+R_NIGER_FAGA_KM1849:
+  coeff_A: 0.341
+  coeff_B: 3.946
+  coeff_Z0: 224.572
+  lat: 13.297
+  lon: 0.819
+  mesh_id: 3784
+  ratio_uncertainty: 0.04745
+R_NIGER_GALMA_KM1233:
+  coeff_A: 4.597
+  coeff_B: 3.971
+  coeff_Z0: 615.546
+  lat: 11.149
+  lon: 7.809
+  mesh_id: 9223
+  ratio_uncertainty: 0.16052
+R_NIGER_KATSINA-ALA_KM0861:
+  coeff_A: 207.876
+  coeff_B: 1.294
+  coeff_Z0: 89.339
+  lat: 7.387
+  lon: 9.268
+  mesh_id: 10267
+  ratio_uncertainty: 0.14548
+R_NIGER_KATSINA-ALA_KM0895:
+  coeff_A: 215.908
+  coeff_B: 1.345
+  coeff_Z0: 98.765
+  lat: 7.198
+  lon: 9.311
+  mesh_id: 10117
+  ratio_uncertainty: 0.14185
+R_NIGER_MAYO-KEBBI_KM1575:
+  coeff_A: 15.13
+  coeff_B: 3.998
+  coeff_Z0: 226.514
+  lat: 9.619
+  lon: 14.018
+  mesh_id: 10554
+  ratio_uncertainty: 0.11771000000000001
+R_NIGER_MBAN_KM1411:
+  coeff_A: 143.794
+  coeff_B: 1.907
+  coeff_Z0: 181.3
+  lat: 9.075
+  lon: 12.951
+  mesh_id: 10647
+  ratio_uncertainty: 0.11631000000000001
+R_NIGER_MILO_KM3814:
+  coeff_A: 6.988
+  coeff_B: 2.187
+  coeff_Z0: 349.324
+  lat: 10.704
+  lon: -9.245
+  mesh_id: 3765
+  ratio_uncertainty: 0.10223000000000002
+R_NIGER_MILO_KM3833:
+  coeff_A: 61.141
+  coeff_B: 1.131
+  coeff_Z0: 353.592
+  lat: 10.618
+  lon: -9.225
+  mesh_id: 3737
+  ratio_uncertainty: 0.09669000000000001
+R_NIGER_MILO_KM3975:
+  coeff_A: 10.608
+  coeff_B: 1.719
+  coeff_Z0: 380.325
+  lat: 9.882
+  lon: -9.309
+  mesh_id: 3360
+  ratio_uncertainty: 0.11721999999999999
+R_NIGER_NIANDAN_KM3893:
+  coeff_A: 60.219
+  coeff_B: 1.423
+  coeff_Z0: 363.849
+  lat: 10.364
+  lon: -9.712
+  mesh_id: 3588
+  ratio_uncertainty: 0.09041
+R_NIGER_NIANDAN_KM3909:
+  coeff_A: 115.995
+  coeff_B: 1.081
+  coeff_Z0: 367.789
+  lat: 10.304
+  lon: -9.735
+  mesh_id: 3530
+  ratio_uncertainty: 0.10502
+R_NIGER_NIGER-TRIB-03_KM1878:
+  coeff_A: 6.716
+  coeff_B: 2.792
+  coeff_Z0: 230.145
+  lat: 14.792
+  lon: 0.477
+  mesh_id: 3978
+  ratio_uncertainty: 0.09337
+R_NIGER_NIGER_KM0195:
+  coeff_A: 23.441
+  coeff_B: 2.688
+  coeff_Z0: 0.747
+  lat: 5.343
+  lon: 6.504
+  mesh_id: 11595
+  ratio_uncertainty: 0.09455999999999999
+R_NIGER_NIGER_KM0209:
+  coeff_A: 63.288
+  coeff_B: 2.367
+  coeff_Z0: 2.822
+  lat: 5.422
+  lon: 6.521
+  mesh_id: 11595
+  ratio_uncertainty: 0.08260999999999999
+R_NIGER_NIGER_KM0227:
+  coeff_A: 68.145
+  coeff_B: 2.307
+  coeff_Z0: 3.882
+  lat: 5.551
+  lon: 6.555
+  mesh_id: 11595
+  ratio_uncertainty: 0.09132
+R_NIGER_NIGER_KM0333:
+  coeff_A: 65.988
+  coeff_B: 2.277
+  coeff_Z0: 11.538
+  lat: 6.331
+  lon: 6.716
+  mesh_id: 11592
+  ratio_uncertainty: 0.07998999999999999
+R_NIGER_NIGER_KM0380:
+  coeff_A: 82.694
+  coeff_B: 2.208
+  coeff_Z0: 16.093
+  lat: 6.698
+  lon: 6.614
+  mesh_id: 11587
+  ratio_uncertainty: 0.08552
+R_NIGER_NIGER_KM0644:
+  coeff_A: 399.78
+  coeff_B: 1.718
+  coeff_Z0: 49.505
+  lat: 8.713
+  lon: 6.322
+  mesh_id: 11559
+  ratio_uncertainty: 0.1107
+R_NIGER_NIGER_KM0663:
+  coeff_A: 367.866
+  coeff_B: 1.842
+  coeff_Z0: 51.192
+  lat: 8.72
+  lon: 6.166
+  mesh_id: 11557
+  ratio_uncertainty: 0.12588
+R_NIGER_NIGER_KM1179:
+  coeff_A: 79.224
+  coeff_B: 2.026
+  coeff_Z0: 143.777
+  lat: 11.384
+  lon: 4.121
+  mesh_id: 11503
+  ratio_uncertainty: 0.07418999999999999
+R_NIGER_NIGER_KM1248:
+  coeff_A: 211.179
+  coeff_B: 1.746
+  coeff_Z0: 151.533
+  lat: 11.655
+  lon: 3.63
+  mesh_id: 11495
+  ratio_uncertainty: 0.07702
+R_NIGER_NIGER_KM1504:
+  coeff_A: 188.393
+  coeff_B: 1.489
+  coeff_Z0: 167.118
+  lat: 12.834
+  lon: 2.425
+  mesh_id: 10731
+  ratio_uncertainty: 0.16288
+R_NIGER_NIGER_KM1772:
+  coeff_A: 54.777
+  coeff_B: 2.317
+  coeff_Z0: 203.812
+  lat: 14.432
+  lon: 1.12
+  mesh_id: 4294
+  ratio_uncertainty: 0.17775
+R_NIGER_NIGER_KM1778:
+  coeff_A: 235.586
+  coeff_B: 1.531
+  coeff_Z0: 206.163
+  lat: 14.472
+  lon: 1.091
+  mesh_id: 4294
+  ratio_uncertainty: 0.10771000000000001
+R_NIGER_NIGER_KM1979:
+  coeff_A: 391.605
+  coeff_B: 1.18
+  coeff_Z0: 241.919
+  lat: 15.713
+  lon: 0.47
+  mesh_id: 4274
+  ratio_uncertainty: 0.09253
+R_NIGER_NIGER_KM2133:
+  coeff_A: 32.774
+  coeff_B: 2.124
+  coeff_Z0: 244.897
+  lat: 16.686
+  lon: -0.252
+  mesh_id: 4256
+  ratio_uncertainty: 0.16349
+R_NIGER_NIGER_KM2174:
+  coeff_A: 351.571
+  coeff_B: 1.006
+  coeff_Z0: 247.948
+  lat: 16.957
+  lon: -0.403
+  mesh_id: 4252
+  ratio_uncertainty: 0.06985000000000001
+R_NIGER_NIGER_KM2264:
+  coeff_A: 399.153
+  coeff_B: 1.024
+  coeff_Z0: 252.402
+  lat: 17.058
+  lon: -1.108
+  mesh_id: 4243
+  ratio_uncertainty: 0.07736
+R_NIGER_NIGER_KM2294:
+  coeff_A: 399.456
+  coeff_B: 1.016
+  coeff_Z0: 253.174
+  lat: 17.001
+  lon: -1.35
+  mesh_id: 4240
+  ratio_uncertainty: 0.1094
+R_NIGER_NIGER_KM2312:
+  coeff_A: 307.809
+  coeff_B: 1.102
+  coeff_Z0: 253.306
+  lat: 17.016
+  lon: -1.484
+  mesh_id: 4238
+  ratio_uncertainty: 0.08988
+R_NIGER_NIGER_KM3100:
+  coeff_A: 14.991
+  coeff_B: 2.664
+  coeff_Z0: 266.695
+  lat: 13.963
+  lon: -5.315
+  mesh_id: 4145
+  ratio_uncertainty: 0.09929
+R_NIGER_NIGER_KM3158:
+  coeff_A: 399.758
+  coeff_B: 1.189
+  coeff_Z0: 272.571
+  lat: 13.752
+  lon: -5.737
+  mesh_id: 4133
+  ratio_uncertainty: 0.11900000000000001
+R_NIGER_NIGER_KM3336:
+  coeff_A: 258.497
+  coeff_B: 1.56
+  coeff_Z0: 284.416
+  lat: 13.249
+  lon: -7.021
+  mesh_id: 4088
+  ratio_uncertainty: 0.07028
+R_NIGER_NIGER_KM3449:
+  coeff_A: 389.186
+  coeff_B: 1.384
+  coeff_Z0: 303.469
+  lat: 12.673
+  lon: -7.747
+  mesh_id: 4049
+  ratio_uncertainty: 0.12813000000000002
+R_NIGER_NIGER_KM3458:
+  coeff_A: 398.447
+  coeff_B: 1.369
+  coeff_Z0: 304.438
+  lat: 12.647
+  lon: -7.816
+  mesh_id: 4046
+  ratio_uncertainty: 0.05480000000000001
+R_NIGER_NIGER_KM3506:
+  coeff_A: 396.799
+  coeff_B: 1.559
+  coeff_Z0: 319.836
+  lat: 12.457
+  lon: -8.081
+  mesh_id: 4031
+  ratio_uncertainty: 0.08282
+R_NIGER_NIGER_KM3609:
+  coeff_A: 125.089
+  coeff_B: 1.725
+  coeff_Z0: 327.713
+  lat: 11.794
+  lon: -8.557
+  mesh_id: 3987
+  ratio_uncertainty: 0.07942
+R_NIGER_NIGER_KM3673:
+  coeff_A: 64.311
+  coeff_B: 1.83
+  coeff_Z0: 332.154
+  lat: 11.433
+  lon: -8.957
+  mesh_id: 3938
+  ratio_uncertainty: 0.12180999999999999
+R_NIGER_NIGER_KM3755:
+  coeff_A: 13.474
+  coeff_B: 2.376
+  coeff_Z0: 341.922
+  lat: 11.077
+  lon: -9.329
+  mesh_id: 3861
+  ratio_uncertainty: 0.15358000000000002
+R_NIGER_NIGER_KM3904:
+  coeff_A: 1.012
+  coeff_B: 3.131
+  coeff_Z0: 358.14
+  lat: 10.544
+  lon: -10.094
+  mesh_id: 3644
+  ratio_uncertainty: 0.05355000000000001
+R_NIGER_NIGER_KM3911:
+  coeff_A: 8.767
+  coeff_B: 2.826
+  coeff_Z0: 364.268
+  lat: 10.528
+  lon: -10.14
+  mesh_id: 3622
+  ratio_uncertainty: 0.0697
+R_NIGER_NIGER_KM3919:
+  coeff_A: 20.053
+  coeff_B: 2.602
+  coeff_Z0: 366.907
+  lat: 10.476
+  lon: -10.171
+  mesh_id: 3598
+  ratio_uncertainty: 0.06518
+R_NIGER_SOKOTO_KM1182:
+  coeff_A: 301.582
+  coeff_B: 1.55
+  coeff_Z0: 145.69
+  lat: 11.405
+  lon: 4.127
+  mesh_id: 11503
+  ratio_uncertainty: 0.08779999999999999
+R_NIGER_SOKOTO_KM1222:
+  coeff_A: 114.019
+  coeff_B: 1.564
+  coeff_Z0: 156.263
+  lat: 11.611
+  lon: 4.176
+  mesh_id: 11311
+  ratio_uncertainty: 0.12918
+R_NIGER_SOKOTO_KM1410:
+  coeff_A: 100.799
+  coeff_B: 1.527
+  coeff_Z0: 201.42
+  lat: 12.568
+  lon: 4.364
+  mesh_id: 11231
+  ratio_uncertainty: 0.09932
+R_NIGER_SOKOTO_KM1433:
+  coeff_A: 84.166
+  coeff_B: 1.743
+  coeff_Z0: 206.757
+  lat: 12.68
+  lon: 4.447
+  mesh_id: 11227
+  ratio_uncertainty: 0.12467
+R_NIGER_TARABA_KM1005:
+  coeff_A: 309.177
+  coeff_B: 1.053
+  coeff_Z0: 104.77
+  lat: 8.588
+  lon: 10.376
+  mesh_id: 10444
+  ratio_uncertainty: 0.13375
+R_NIGER_TINKISSO_KM3749:
+  coeff_A: 17.419
+  coeff_B: 1.742
+  coeff_Z0: 335.519
+  lat: 11.414
+  lon: -9.406
+  mesh_id: 3878
+  ratio_uncertainty: 0.13163
+R_NIGER_TINKISSO_KM3860:
+  coeff_A: 40.713
+  coeff_B: 1.102
+  coeff_Z0: 344.35
+  lat: 11.398
+  lon: -9.9
+  mesh_id: 3764
+  ratio_uncertainty: 0.1252
+R_NIGER_TINKISSO_KM3968:
+  coeff_A: 1.173
+  coeff_B: 2.148
+  coeff_Z0: 349.039
+  lat: 11.366
+  lon: -10.33
+  mesh_id: 3583
+  ratio_uncertainty: 0.10672000000000001
