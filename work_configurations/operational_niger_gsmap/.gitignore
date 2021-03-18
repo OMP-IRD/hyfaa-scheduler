@@ -1,0 +1,7 @@
+databases
+*databases
+input_data
+*.tar.gz
+fort*
+temp
+temp*

@@ -21,16 +21,13 @@
 #######################################################################
 
 from hyfaa.common.common_functions import *
-import copy
-from datetime import datetime, timedelta
-import numpy as np
-import netCDF4
-import time
 
 from hyfaa.common.test.common_test_functions import *
 from hyfaa.check_input_parameters.check_input_parameters import *
 from hyfaa.common.yaml.yaml_parser import load_yaml
 from hyfaa.database.hydrostates.hydrostates_db import HydroStates_DBManager
+
+from scipy.stats import median_abs_deviation
 
 
 portal_default_round = 3
@@ -159,6 +156,7 @@ def hyfaa_postprocessing(yaml_file_or_dict, verbose=None):
         #initialize portal file variables
         ds_portal.createDimension('n_time', n_time)
         ds_portal.createDimension('n_cells', n_cells)
+        ds_portal.createDimension('n_ensemble', dico['n_ensemble'])
         ds_portal.createVariable('time', np.float64, ['n_time'])
         ds_portal.variables['time'][:] = np.ma.masked_invalid(np.array([datetime_to_julianday(el) for el in time_new], dtype=np.float64))
         ds_portal.variables['time'].setncattr('units', 'days since 1950-01-01 00:00:00.0')
@@ -183,15 +181,27 @@ def hyfaa_postprocessing(yaml_file_or_dict, verbose=None):
         ds_portal.variables[var_name].setncattr('long_name', 'time added to hydrological database (days since 1950-01-01)')
         ds_portal.variables[var_name].setncattr('standard_name', var_name)
         ds_portal.variables[var_name].setncattr('calendar', 'gregorian')
+        var_name = 'is_analysis'
+        ds_portal.createVariable(var_name, np.uint8, ['n_time'])
+        ds_portal.variables[var_name].setncattr('units', '0,1')
+        ds_portal.variables[var_name].setncattr('long_name', 'control (0) or analysis (1)')
+        ds_portal.variables[var_name].setncattr('standard_name', var_name)
         
         for var_name in dico['post_processing']['variables']:
-            for stat_type in ['mean', 'median', 'std']:
+            if dico['n_ensemble'] > 1 :
+                stat_types_portal = ['mean', 'median', 'std', 'mad']
+            else:
+                stat_types_portal = ['mean']
+            for stat_type in stat_types_portal:
                 ds_portal.createVariable(var_name + '_' + stat_type, np.float64, ['n_time', 'n_cells'])
                 if var_name in vars_info_portal:
                     ds_portal.variables[var_name + '_' + stat_type].setncattr('units', vars_info_portal[var_name]['info_dict']['units'])
                     ds_portal.variables[var_name + '_' + stat_type].setncattr('long_name', vars_info_portal[var_name]['info_dict']['long_name'] + ' (%s)'%stat_type)
                     ds_portal.variables[var_name + '_' + stat_type].setncattr('standard_name', vars_info_portal[var_name]['info_dict']['standard_name'] + '_%s'%stat_type)
-                    ds_portal.variables[var_name + '_' + stat_type].setncattr('comments', vars_info_portal[var_name]['info_dict']['comments'] + ' (%s)'%stat_type)
+                    if stat_type == 'mad':
+                        ds_portal.variables[var_name + '_' + stat_type].setncattr('comments', vars_info_portal[var_name]['info_dict']['comments'] + ' (contains sqrt(2)*%s)'%stat_type)
+                    else:
+                        ds_portal.variables[var_name + '_' + stat_type].setncattr('comments', vars_info_portal[var_name]['info_dict']['comments'] + ' (%s)'%stat_type)
                 else:
                     ds_portal.variables[var_name + '_' + stat_type].setncattr('long_name', var_name + ' (%s)'%stat_type)
                     ds_portal.variables[var_name + '_' + stat_type].setncattr('standard_name', var_name + '_%s'%stat_type)
@@ -252,8 +262,10 @@ def hyfaa_postprocessing(yaml_file_or_dict, verbose=None):
                         else:
                             round_value_loc = portal_default_round
                         ds_portal.variables[elem + '_mean'][it,:] = np.round(np.ma.mean(data_loc, axis=1), round_value_loc)
-                        ds_portal.variables[elem + '_median'][it,:] = np.round(np.ma.median(data_loc, axis=1), round_value_loc)
-                        ds_portal.variables[elem + '_std'][it,:] = np.round(np.ma.std(data_loc, axis=1), round_value_loc)
+                        if dico['n_ensemble'] > 1:
+                            ds_portal.variables[elem + '_median'][it,:] = np.round(np.ma.median(data_loc, axis=1), round_value_loc)
+                            ds_portal.variables[elem + '_std'][it,:] = np.round(np.ma.std(data_loc, axis=1), round_value_loc)
+                            ds_portal.variables[elem + '_mad'][it,:] = np.round(median_abs_deviation(data_loc, axis=1, scale='normal'), round_value_loc)
                     
                 if it0 is None:
                     ds_in.close()
@@ -261,6 +273,10 @@ def hyfaa_postprocessing(yaml_file_or_dict, verbose=None):
                 ds_science.variables['time_added_to_hydb_%s'%type_loc][it] = date_added_loc
                 if type_loc == best_type_loc: 
                     ds_portal.variables['time_added_to_hydb'][it] = date_added_loc
+                    if type_loc == 'analysis':
+                        ds_portal.variables['is_analysis'][it] = np.uint8(1)
+                    else:
+                        ds_portal.variables['is_analysis'][it] = np.uint8(0)
     
     #compress portal file.
     #NB: no need compressing the science file, it will not yield any significant gains in size

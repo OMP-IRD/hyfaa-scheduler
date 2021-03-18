@@ -1,0 +1,100 @@
+#scheduler main processing input parameters
+#main processing = operational analysis and forecasting using MGB-IPH code + assimilation processes
+nprocs: 4
+verbose: 1
+
+#init conditions (for first init i.e. if hydrological_states_database_directory is empty)
+#these conditions are stored into the hydrological states database => if the database exists and the conditions don't match, the program returns an error
+init_conditions:
+  time_start: '2017-04-01T00:00:00.000000'
+  #to start model with an real initial hydrological state => if None than no hydrological state is loaded
+  #default configuration is to use the result of a 1200 days simulation starting 01/01/2011 and ending 15/04/2014, this helps initialize the model faster
+  hydrological_state_start: ${hyfaa_workdir}/input_data/default_start_hydrostate.nc
+scheduler_time_step: 1.
+forecast_time_span: 3.
+#choose an ensemble size of 1 if you do not wish to perturb rain inputs
+n_ensemble: 20
+exec_time: 
+
+#operational_mode: do not activate, it is only to be used when hyfaa scheduler_processing_main is launched by an operational routine and deletes 
+#the last retreatment_time_span days to incorporate assimilation data
+operational_mode: true
+retreatment_time_span: 10.
+
+
+#hydrological state database : used as an input and an output to see which date was treated first
+hydrological_states_database_directory: ${hyfaa_workdir}/assimilated_solution_databases/hydrological_states_db
+  
+#activate assimilation
+activate_assimilation: true
+
+#perturb parameters within static_data file (only those f(i_cells)) : n_ensemble will be generated
+perturb_static_data:
+  activate: false
+  type: normal
+  mode: per_variable
+  folder_store: ${hyfaa_workdir}/assimilated_solution_databases/mini_gtp_ensemble
+  varying_parameters:
+  -
+    name: river_width
+    error: 0.3
+    min: 2.4
+    max: 
+  -
+    name: river_depth
+    error: 0.3
+    min: 0.2
+    max: 
+  -
+    name: manning_coefficient
+    error: 0.3
+    min: 0.03
+    max: 0.25
+  -
+    name: main_river_slope
+    error: 0.3  
+    min: 0.001
+    max: 
+
+#input databases
+#forcing source: gsmap, era5, (imerg, arpege : not implemented yet)
+forcing_source: gsmap
+forcing_grid_geo_selection:
+  lonmin: -12.5
+  lonmax: 16.5
+  latmin: 4.
+  latmax: 25.
+forcing_grid_database_directory: ${hyfaa_workdir}/databases/forcing_grid_db
+forcing_onmesh_database_directory: ${hyfaa_workdir}/databases/forcing_onmesh_db
+#for input forcing data where there may be missing dates, the model can use forcing data at dates prior to the model date within forcing_dates_dt_max (it chooses the closest date)
+forcing_dates_dt_max: 10.
+rain_uncertainty: 0.5
+
+assimilation_database_directory: ${hyfaa_workdir}/databases/assimilation_db
+assimilation_sources:
+- ${hyfaa_workdir}/config/hysope_svs.yaml
+assim_params_file: ${hyfaa_workdir}/config/assimilation_parameters.yaml
+
+
+
+#executable for MGB-IPH simulation
+mgb:
+  executable: mgb_iph
+  static_data_file: ${hyfaa_workdir}/input_data/static_data.nc
+  input_model: ${hyfaa_workdir}/config/mgb_iph_model_input.yaml
+model_min_time_step: 1.
+  
+
+#temporary files directory. if left empty, TMPDIR will be taken as hyfaa temp dir, and then current working directory if TMPDIR env var is not set.
+temporary_files_directory: ${hyfaa_temp_dir}
+
+
+
+#post-processing
+post_processing:
+  science_file: ${hyfaa_workdir}/assimilated_solution_databases/post_processing_science.nc
+  portal_file: ${hyfaa_workdir}/assimilated_solution_databases/post_processing_portal.nc
+  variables:
+    - water_elevation_catchment
+    - streamflow_catchment
+

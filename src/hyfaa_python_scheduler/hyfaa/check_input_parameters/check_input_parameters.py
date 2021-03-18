@@ -38,7 +38,7 @@ def get_lonlat_minmax_from_mgb_static_file(static_file_path):
 def check_parameters(dico):
     #1st level
     check_dict(dico, ['init_conditions', 'scheduler_time_step', 'forecast_time_span', 'n_ensemble', 'operational_mode', 'retreatment_time_span', \
-        'hydrological_states_database_directory', 'perturb_static_data', 'forcing_source', 'forcing_grid_database_directory', 'forcing_onmesh_database_directory', \
+        'hydrological_states_database_directory', 'activate_assimilation', 'perturb_static_data', 'forcing_source', 'forcing_grid_database_directory', 'forcing_onmesh_database_directory', \
         'forcing_dates_dt_max', 'rain_uncertainty', 'assimilation_database_directory', 'assimilation_sources', 'assim_params_file', \
         'mgb', 'model_min_time_step', 'post_processing'], check_none=True)
     check_dict(dico, ['exec_time', 'forcing_grid_geo_selection', 'nprocs', 'temporary_files_directory'], check_none=False, prefix=None)
@@ -98,6 +98,9 @@ def check_parameters(dico):
     elif not hasattr(dico['exec_time'], 'strftime'):
         dico['exec_time'] = datetime.strptime(dico['exec_time'], '%Y-%m-%dT%H:%M:%S.%f')
         
+    #activate assimilation
+    assert isinstance(dico['activate_assimilation'], bool)
+    
     #perturb static_data
     check_dict(dico['perturb_static_data'], ['activate', 'folder_store', 'varying_parameters','type','mode'], check_none=True, prefix='in perturb_static_data: ')
     if not isinstance(dico['perturb_static_data']['activate'], bool):

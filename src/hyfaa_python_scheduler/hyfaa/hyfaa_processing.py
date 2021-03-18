@@ -140,6 +140,7 @@ def hyfaa_processing(yaml_file_or_dict, verbose=None):
     
     if dico['n_ensemble'] < 2:
         print('Ensemble size of 1 => setting to false all options to perturb parameters or input forcing, as well as assimilation.')
+        dico['activate_assimilation'] = False
         dico['perturb_static_data']['activate'] = False
         dico_assim['parameters']['activate'] = False
     if dico['perturb_static_data']['activate']:
@@ -287,10 +288,7 @@ def hyfaa_processing(yaml_file_or_dict, verbose=None):
             if verbose >= 1:
                 print('    => %s'%tim)
                 print('  1) Analysis step')
-            if dico['n_ensemble'] == 1:
-                if verbose >= 1:
-                    print('    => Ensemble size = 1, no data assimilation: %s'%tim)
-            else:
+            if dico['activate_assimilation']:
                 Assim_obs = Assim_db.get_values_between_dates(date_start=last_date, date_end=date_compute, dt_max=0.0, start_strict=False, end_strict=True)
                 if len(Assim_obs) > 0 and (start_mode == 'start_mode' or (start_mode != 'start_mode' and i_compute>0)):
                     if verbose >= 2:
@@ -307,6 +305,9 @@ def hyfaa_processing(yaml_file_or_dict, verbose=None):
                 else:
                     if verbose >= 1:
                         print('    => No data assimilated: %s'%tim)
+            else:
+                if verbose >= 1:
+                    print('    => Assimilation not activated, no data assimilation: %s'%tim)
                 
                 
                 

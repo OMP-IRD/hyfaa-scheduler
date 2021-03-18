@@ -1,19 +1,19 @@
-FROM python:3.7 AS base
+FROM continuumio/miniconda3 AS base
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
 RUN ulimit -s unlimited
 
-# installs common to builder & production
-RUN pip install numpy numba scipy netCDF4 pyyaml progress pandas geopandas pytest requests SALib ftputil
-
-#--------------------
-FROM base AS builder
+#install libraries
 RUN apt-get -q update \
     && apt-get -q -y install build-essential gfortran cmake libnetcdf-dev libnetcdff-dev  \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
+
+# installs common to builder & production
+RUN conda install -y -c conda-forge python=3.7 numpy scipy netCDF4 pyyaml progress pandas pytest requests SALib ftputil
+
 COPY install.sh install.sh
 COPY README.md README.md
 COPY src src

@@ -1,6 +1,6 @@
 #scheduler main processing input parameters
 #main processing = operational analysis and forecasting using MGB-IPH code + assimilation processes
-nprocs: 5
+nprocs: 4
 verbose: 1
 
 #init conditions (for first init i.e. if hydrological_states_database_directory is empty)
@@ -13,7 +13,7 @@ init_conditions:
 scheduler_time_step: 1.
 forecast_time_span: 3.
 #choose an ensemble size of 1 if you do not wish to perturb rain inputs
-n_ensemble: 5
+n_ensemble: 20
 exec_time: 
 
 #operational_mode: do not activate, it is only to be used when hyfaa scheduler_processing_main is launched by an operational routine and deletes 
@@ -23,14 +23,17 @@ retreatment_time_span: 10.
 
 
 #hydrological state database : used as an input and an output to see which date was treated first
-hydrological_states_database_directory: ${hyfaa_workdir}/databases/hydrological_states_db
+hydrological_states_database_directory: ${hyfaa_workdir}/ensemblist_solution_databases/hydrological_states_db
   
+#activate assimilation
+activate_assimilation: false
+
 #perturb parameters within static_data file (only those f(i_cells)) : n_ensemble will be generated
 perturb_static_data:
   activate: false
   type: normal
   mode: per_variable
-  folder_store: ${hyfaa_workdir}/databases/mini_gtp_ensemble
+  folder_store: ${hyfaa_workdir}/ensemblist_solution_databases/mini_gtp_ensemble
   varying_parameters:
   -
     name: river_width
@@ -89,8 +92,8 @@ temporary_files_directory: ${hyfaa_temp_dir}
 
 #post-processing
 post_processing:
-  science_file: ${hyfaa_workdir}/databases/post_processing_science.nc
-  portal_file: ${hyfaa_workdir}/databases/post_processing_portal.nc
+  science_file: ${hyfaa_workdir}/ensemblist_solution_databases/post_processing_science.nc
+  portal_file: ${hyfaa_workdir}/ensemblist_solution_databases/post_processing_portal.nc
   variables:
     - water_elevation_catchment
     - streamflow_catchment
