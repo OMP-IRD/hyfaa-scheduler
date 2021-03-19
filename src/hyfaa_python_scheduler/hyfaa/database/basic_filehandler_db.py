@@ -160,7 +160,7 @@ class BasicFileHandler_DBManager(object):
         #remove all entries/files with status adding => means it failed and that there may be corrupted files taking disk space
         info_db = self.read_as_pandas_dataframe("SELECT file_path FROM FILEINFO WHERE file_status=?", params=['adding'])
         if len(info_db['file_path']) > 0:
-            self.remove_files(info_db['file_path'])
+            self.remove_files(info_db)
             
     def get_data_path(self):
         return self._data_path
@@ -186,9 +186,9 @@ class BasicFileHandler_DBManager(object):
         return minmax_dates
         
     
-    def remove_files(self, filenames):
+    def remove_files(self, info_db):
         """Remove files from database"""
-        for filename in filenames:
+        for filename in info_db['file_path']:
             full_path = os.path.join(self._data_path, filename)
             os.unlink(full_path)
             self._cursor.execute('DELETE FROM FILEINFO WHERE file_path=?', (filename, ))

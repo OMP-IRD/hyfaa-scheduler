@@ -177,8 +177,8 @@ def main(debug_mode=False):
                 ds.write('# Ignore everything in this directory\n*\n# Except this file\n!.gitignore\n')
     
     include_dirs = [el for el in ['/usr/local/include', '/usr/include', '%s/build/include'%os.environ['datetime_fortran_path'], \
-        '/work/logiciels/rh7/netcdf/4.4.1/include'] if os.path.exists(el)]
-    lib_dirs = [el for el in ['%s/build/lib'%os.environ['datetime_fortran_path'], '/work/logiciels/rh7/netcdf/4.4.1/lib'] if os.path.exists(el)]
+        '/softs/rh7/netcdf/4.4.1/include'] if os.path.exists(el)]
+    lib_dirs = [el for el in ['%s/build/lib'%os.environ['datetime_fortran_path'], '/softs/rh7/netcdf/4.4.1/lib'] if os.path.exists(el)]
     
     compiler = 'gfortran'
     if debug_mode:

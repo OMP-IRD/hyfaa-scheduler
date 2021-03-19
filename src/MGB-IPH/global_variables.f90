@@ -26,7 +26,7 @@ module global_variables
 	integer::trash_int, trash_int2, trash_int3, trash_int4, trash_int5, status_int
 	real::trash_real, trash_real2
 	double precision::trash_dp, trash_dp2
-    logical::is_congo
+    logical::is_congo,use_face_bflow
     character(len=100):: hydrodynamic_module
 	character(len=1024):: trash_str, temp_str, temp_str1, temp_str2
 	CHARACTER(len=1024):: output_directory, forcing_data_file, param_calib_file
@@ -302,12 +302,8 @@ module global_variables
     
     integer :: nface,iFACE,KCAT,KCAT2                             !NUMERO DE PONTOS DA TABELA DE FACES
     integer,allocatable::nFACECAT1(:),nFACECAT2(:)
-    real*8,ALLOCATABLE::Q2face(:),nFACEDX(:),Q2viz(:)                     !Vazão nas faces
+    real*8,ALLOCATABLE::Q2face(:),nFACEDX(:),Q2viz(:),nBFACE(:)                     !Vazão nas faces
     integer,allocatable:: jtab(:)
-    
-    integer,ALLOCATABLE:: INLAND_DELTA(:) !Flag se minibacia está no inland delta 
-    integer,ALLOCATABLE:: NORTHERN_DELTA(:) !Flag se minibacia está no inland delta 
-    integer,ALLOCATABLE:: SOUTHERN_DELTA(:) !Flag se minibacia está no inland delta 
     
     real,ALLOCATABLE:: DINFILT(:) !INFILTRATION FROM FLOODPLAIN TO SOIL
     real DINFILTX !INFILTRATION FROM FLOODPLAIN TO SOIL

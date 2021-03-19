@@ -53,6 +53,14 @@ contains
             n_climatology = nc_dimension(ncid, "n_climatology")
         end if
         
+        nc_rep = nf90_inq_varid(ncid, "face_bflow", var_id)
+        if (nc_rep /= nf90_noerr) then
+            use_face_bflow = .false.
+        else
+            use_face_bflow = .true.
+        end if
+        print*, 'use_face_bflow', use_face_bflow
+        
         print*, 'Allocating variables'
         call allocate_main_variables !Allocate the model main variables
         call allocate_inertial_variables !Allocate the variables of the model Local Inertial flow routing model
@@ -252,6 +260,11 @@ contains
         call check_ncrequest( nf90_get_var(ncid, var_id, nfacecat2) )
         call check_ncrequest( nf90_inq_varid(ncid, "face_dx", var_id) )
         call check_ncrequest( nf90_get_var(ncid, var_id, nfacedx) )
+        if (use_face_bflow) then
+            call check_ncrequest( nf90_inq_varid(ncid, "face_bflow", var_id) )
+            call check_ncrequest( nf90_get_var(ncid, var_id, nfacedx) )
+        end if
+        
         
         !get delta information => to be generalized
         if (n_deltas.gt.0) then

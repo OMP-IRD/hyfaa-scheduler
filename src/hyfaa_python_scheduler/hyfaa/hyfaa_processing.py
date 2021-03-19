@@ -360,6 +360,7 @@ def hyfaa_processing(yaml_file_or_dict, verbose=None):
                 print('  3) Launching %d MGB simulations...'%(len(job_params)))
                 
             job_output_dict = sim_tasks.run(job_params) #MGB simulation !!!
+            # ~ print(job_output_dict[0]['output'])
             
             missing_output_files = [el for el in mgb_output_files_ordered if not os.path.exists(el)]
             if len(missing_output_files) > 0:

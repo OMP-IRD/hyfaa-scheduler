@@ -185,8 +185,11 @@
             !A rotina DBLE transforma a variável de entrada em um real*8
             !Média dos dx de IC e ICJUS
             dxflow=DBLE(nFACEDX(iFACE))       !Verificar se precisa de um limitador do dx
-            bflow=100.0
-            !bflow=DBLE(BRIO(KCAT))
+            if (use_face_bflow) then
+                bflow=nBFACE(iFACE)
+            else
+                bflow=100.0
+            end if
 
             
             do i_delta=1,n_deltas
@@ -228,7 +231,7 @@
             endif
             
             ! Calcula a nova vazão no próximo intervalo de tempo: EXCLUI FACES QUE NÃO ESTÃO LOCALIZADAS NO INLAND DELTA
-            IF(is_delta_outlet) THEN
+            IF (is_delta_outlet) THEN
                 Q2face(iFACE)=q ! em m3/s
                 Q2viz(KCAT)=Q2viz(KCAT)- Q2face(iFACE)
                 Q2viz(KCAT2)=Q2viz(KCAT2)+ Q2face(iFACE)

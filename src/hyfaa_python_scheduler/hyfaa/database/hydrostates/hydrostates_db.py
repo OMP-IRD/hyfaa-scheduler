@@ -178,9 +178,13 @@ class HydroStates_DBManager(BasicFileHandler_DBManager):
         return dates_of_files_chosen, files_chosen
         
         
-    def remove_files(self, filenames):
+    def remove_files(self, info_db):
         """Remove files from database"""
-        raise NotImplementedError('not implemented yet')
+        for i0 in range(len(info_db['file_path'])):
+            full_path = self.get_full_path(info_db.loc[i0])
+            os.unlink(full_path)
+            self._cursor.execute('DELETE FROM FILEINFO WHERE type=? AND file_path=?', (info_db['type'][i0], info_db['file_path'][i0], ))
+        self._conn.commit()
         
         
     def remove_after_date(self, datetime_last):

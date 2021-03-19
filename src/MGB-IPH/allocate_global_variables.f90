@@ -86,6 +86,9 @@ contains
 		allocate (RUGMAN(NC)) !Manning
         
         allocate (nFACECAT1(nface),nFACECAT2(nface),nFACEDX(nface),Q2face(nface),Q2viz(nc))
+        if (use_face_bflow) then
+            allocate(nBFACE(nc))
+        end if
         
         
     end subroutine allocate_main_variables
