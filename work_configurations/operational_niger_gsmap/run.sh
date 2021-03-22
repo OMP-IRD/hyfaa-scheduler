@@ -15,9 +15,9 @@ else
 fi
 
 ###########
-#~ #get forcing and assimilated data : common step for assimilated, ensemblist and mgbstandard solutions
+#get forcing and assimilated data : common step for assimilated, ensemblist and mgbstandard solutions
 hyfaa_preprocessing_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
-#~ hyfaa_preprocessing_assimilation.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
+hyfaa_preprocessing_assimilation.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
 
 
 ###########
@@ -25,17 +25,17 @@ hyfaa_preprocessing_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_a
 hyfaa_processing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstandard_solution.yaml
 hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstandard_solution.yaml
 
-#~ #process ensemblist solution
-#~ hyfaa_processing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml
-#~ hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml
+#process ensemblist solution
+hyfaa_processing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml
+hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml
 
-#~ #process assimilated solution
-#~ hyfaa_processing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
-#~ hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
+#process assimilated solution
+hyfaa_processing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
+hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
 
 
-#~ ###########
-#~ #create fake previsions using previous years
-#~ fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstandard_solution.yaml --ndays 10 --nyearsmax 10
-#~ fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml --ndays 10 --nyearsmax 10
-#~ fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml --ndays 10 --nyearsmax 10
+###########
+#create fake previsions using previous years
+fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstandard_solution.yaml --ndays 10 --nyearsmax 10
+fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml --ndays 10 --nyearsmax 10
+fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml --ndays 10 --nyearsmax 10
