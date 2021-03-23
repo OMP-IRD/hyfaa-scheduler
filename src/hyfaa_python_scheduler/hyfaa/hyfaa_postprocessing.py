@@ -254,7 +254,7 @@ def hyfaa_postprocessing(yaml_file_or_dict, verbose=None):
                         for i_ensemble in range(dico['n_ensemble']):
                             data_loc[:,i_ensemble] = np.ma.masked_invalid(ds_in.variables['%s_%d'%(elem, i_ensemble)][:])
                     else:
-                        data_loc = ds_science_old.variables[var_name]['data'][it0,:,:]
+                        data_loc = ds_science_old.variables[var_name][it0,:,:]
                     ds_science.variables[var_name][it,:,:] = data_loc
                     if type_loc == best_type_loc:
                         if elem in vars_info_portal:
