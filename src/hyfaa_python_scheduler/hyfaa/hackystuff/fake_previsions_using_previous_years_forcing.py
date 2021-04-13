@@ -110,13 +110,15 @@ def fake_previsions_using_previous_years_forcing(yaml_file_or_dict, ndays, outpu
         for ii_ens in range(dico['n_ensemble']):
             streamflow_ar[ii_ens, :] = np.ma.masked_invalid(ds.variables['streamflow_catchment_%d'%ii_ens][:])
     median_streamflow = np.ma.median(streamflow_ar, axis=0)
-    ii_ens_selection = np.argmin(np.sum((streamflow_ar-median_streamflow)**2, axis=0))
+    variance_ar=np.sum((streamflow_ar-median_streamflow)**2, axis=1)
+    ii_ens_selection =np.argmin(variance_ar,axis=0)
+    
     extract_ensemble_member(hydrological_state_ens_start_path, hydrological_state_start_path, ii_ens_selection, compression_level=4)
         
     
     #point to the right static data file
     if dico['perturb_static_data']['activate']:
-        static_data_file = os.path.join(dico['perturb_static_data']['folder_store'], 'static_data_%d.nc'%ii_ens_select)
+        static_data_file = os.path.join(dico['perturb_static_data']['folder_store'], 'static_data_%d.nc'%ii_ens_selection)
         assert os.path.exists(static_data_file), 'static data file %s not found'%static_data_file
     else:
         static_data_file = dico['mgb']['static_data_file']
