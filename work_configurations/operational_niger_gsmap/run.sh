@@ -23,7 +23,9 @@ hyfaa_preprocessing_assimilation.py --input_yaml_file ${hyfaa_workdir}/config/in
 
 ###########
 #process mgbstandard solution
+echo -e "\n\n##########################################################"
 echo "# process mgbstandard solution"
+echo -e "##########################################################\n"
 hyfaa_processing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstandard_solution.yaml
 hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstandard_solution.yaml
 
@@ -33,14 +35,18 @@ hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstand
 # hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml
 
 #process assimilated solution
+echo -e "\n\n##########################################################"
 echo "# process assimilated solution"
+echo -e "##########################################################\n"
 hyfaa_processing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
 hyfaa_postprocessing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
 
 
 ###########
 #create fake previsions using previous years
+echo -e "\n\n##########################################################"
 echo "# create fake previsions using previous years"
+echo -e "##########################################################\n"
 fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_mgbstandard_solution.yaml --ndays 10 --nyearsmax 10
-fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml --ndays 10 --nyearsmax 10
-fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml --ndays 10 --nyearsmax 10
+#fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_ensemblist_solution.yaml --ndays 10 --nyearsmax 10
+#fake_previsions_using_previous_years_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml --ndays 10 --nyearsmax 10
