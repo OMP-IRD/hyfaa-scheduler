@@ -35,7 +35,7 @@ def run_pbs(pbs_name=None):
         shutil.which('qsub')
     except:
         raise Exception('Cannot launch on PBS, qsub command not accessible')
-    nprocs = yaml.load(open('config/input.yaml'))['nprocs']
+    nprocs = max([yaml.load(open(os.path.join('config', el)))['nprocs'] for el in os.listdir('config') if 'input_' in el and '.yaml' in el])
     memory = max(8000, nprocs*4000)
     txt = 'qsub -N %s -v hyfaa_workdir=%s -l select=1:ncpus=%d:mem=%dmb:os=rh7 -l walltime=100:00:00 run.sh'%(pbs_name, cwd, nprocs, memory)
     print(txt)
