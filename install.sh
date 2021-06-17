@@ -61,6 +61,7 @@ then
     pip install .
 else
     pip install --prefix=${mgb_iph_install_dir} .
+    chmod u+x ${mgb_iph_install_dir}/bin/*
     echo ''
     echo 'IMPORTANT : HYFAA and mgb_iph have been installed to non standard directory '${mgb_iph_install_dir}
     echo 'The following paths must be added to PATH and PYTHONPATH for HYFAA to work:'

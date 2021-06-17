@@ -91,3 +91,13 @@ Use docker (best option), or use a unix virtual machine.
 #### Without docker
 
 - go to the configuration folder chosen and launch `run.sh`
+
+#### Using PBS on CNES cluster
+
+- go to the configuration folder chosen and launch `./run_pbs.py`
+
+__WARNING:__ So that modules and paths, pythonpaths are set on the node, you must either add them to your ~/.bashrc, or to the `run.sh` script in the configuration folder.
+
+__NB:__ You can use the `--pbs_name` option to set your job name; `hyfaa` by default.
+
+
