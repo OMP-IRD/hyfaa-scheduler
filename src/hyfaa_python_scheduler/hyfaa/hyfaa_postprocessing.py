@@ -27,7 +27,13 @@ from hyfaa.check_input_parameters.check_input_parameters import *
 from hyfaa.common.yaml.yaml_parser import load_yaml
 from hyfaa.database.hydrostates.hydrostates_db import HydroStates_DBManager
 
-from scipy.stats import median_abs_deviation
+
+def median_abs_deviation_compatible_old_scipy(data_loc):
+    try:
+        from scipy.stats import median_abs_deviation
+        return median_abs_deviation(data_loc, axis=1, scale='normal')
+    except:
+        return np.ma.median(np.abs(data_loc - np.tile(np.ma.median(data_loc, axis=1)[:, np.newaxis], (1, np.shape(data_loc)[1]))), axis=1) / 0.67449
 
 
 portal_default_round = 3
@@ -265,7 +271,7 @@ def hyfaa_postprocessing(yaml_file_or_dict, verbose=None):
                         if dico['n_ensemble'] > 1:
                             ds_portal.variables[elem + '_median'][it,:] = np.round(np.ma.median(data_loc, axis=1), round_value_loc)
                             ds_portal.variables[elem + '_std'][it,:] = np.round(np.ma.std(data_loc, axis=1), round_value_loc)
-                            ds_portal.variables[elem + '_mad'][it,:] = np.round(median_abs_deviation(data_loc, axis=1, scale='normal'), round_value_loc)
+                            ds_portal.variables[elem + '_mad'][it,:] = np.round(median_abs_deviation_compatible_old_scipy(data_loc), round_value_loc)
                     
                 if it0 is None:
                     ds_in.close()
