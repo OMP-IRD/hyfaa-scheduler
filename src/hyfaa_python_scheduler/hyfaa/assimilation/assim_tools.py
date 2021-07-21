@@ -216,10 +216,15 @@ def get_perturbed_multfact_vectors_from_hydrostate(hydrostate_ordered_paths):
     return perturbed_multfact_vectors
 
 
-def rain_perturbation(perturbed_previous_multfact_vectors, actual_rain_vector):
+def rain_perturbation(perturbed_previous_multfact_vectors, actual_rain_vector,error):
     """returns an array of "perturbed" rain vectors"""   
-    fact = (1./np.sqrt(0.5**2+1))*np.exp(np.log(0.5**2+1)*perturbed_previous_multfact_vectors)
+    #factnorm=np.random.normal(0,1,20)
+    #normmat=np.full((20,11595),1.0)
+    #for it in range(0,20):
+    #    normmat[it,:]=1+factnorm[it]
+    fact = (1./np.sqrt(error**2+1))*np.exp(np.log(error**2+1)*perturbed_previous_multfact_vectors)
     perturbed_rain = np.multiply(fact, actual_rain_vector)
+    
     return perturbed_rain
 
 

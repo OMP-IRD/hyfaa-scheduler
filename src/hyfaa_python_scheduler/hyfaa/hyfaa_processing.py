@@ -122,7 +122,8 @@ def hyfaa_processing(yaml_file_or_dict, verbose=None):
         os.makedirs(fol, exist_ok=True)
     main_temp_dir = tempfile.mkdtemp(dir=dico['temporary_files_directory'], prefix='temphyfaamain')
 
-    
+    #rain_uncertainty
+    prec_error=dico['rain_uncertainty']
     
     #get mgb iph input model:
     mgb_iph_input_model = load_yaml(dico['mgb']['input_model'], env_vars=True)
@@ -273,15 +274,15 @@ def hyfaa_processing(yaml_file_or_dict, verbose=None):
             else:
                 perturbed_multfact_vector = assim_tools.build_gaussian_error_fields(n_cells, dico['n_ensemble'], dico['forcing_grid_geo_selection'], mesh_lon, mesh_lat)
                 #build fields of perturbed precipitation
+                
                 for ii in range(np.shape(rain_data)[1]):
-                    perturbed_rain_vectors[:,:,ii] = assim_tools.rain_perturbation(perturbed_multfact_vector, rain_data[:,ii])
+                    perturbed_rain_vectors[:,:,ii] = assim_tools.rain_perturbation(perturbed_multfact_vector, rain_data[:,ii],prec_error)
+                    
+                    #perturbed_rain_vectors[:,:,ii] =
             perturbed_rain_vectors[perturbed_rain_vectors<0.] = 0.
             #############################################
             
-            
-            
-            
-            
+
 
             #############################################
             #perform analysis
