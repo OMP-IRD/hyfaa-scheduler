@@ -72,12 +72,14 @@ def build_gaussian_error_fields(n_cells, nens, square, mgb_mesh_lon, mgb_mesh_la
     noise = np.zeros((nlat,nlon,nens), dtype=np.float64)
     
     theta = 3.
-    sigma = 0.5
+    #sigma = 0.5
+    sigma = 1.
     mean = np.zeros(nlon*nlat, dtype=np.float64)
     grid_lon, grid_lat = np.meshgrid(lon,lat)
     grid_lon = grid_lon.flatten()
     grid_lat = grid_lat.flatten()
-    cov_square = theta**2*np.exp(-0.5*(cross_diff(grid_lon, grid_lon)**2 + cross_diff(grid_lat, grid_lat)**2) / sigma **2)
+    #cov_square = theta**2*np.exp(-0.5*(cross_diff(grid_lon, grid_lon)**2 + cross_diff(grid_lat, grid_lat)**2) / sigma **2)
+    cov_square = sigma**2*np.exp(-0.5*(cross_diff(grid_lon, grid_lon)**2 + cross_diff(grid_lat, grid_lat)**2) / theta **2)
     for iens in range(nens):
         gaussfield = np.random.multivariate_normal(mean, cov_square)
         noise[:,:,iens] = np.reshape(gaussfield, (nlat,nlon))
@@ -222,7 +224,8 @@ def rain_perturbation(perturbed_previous_multfact_vectors, actual_rain_vector,er
     #normmat=np.full((20,11595),1.0)
     #for it in range(0,20):
     #    normmat[it,:]=1+factnorm[it]
-    fact = (1./np.sqrt(error**2+1))*np.exp(np.log(error**2+1)*perturbed_previous_multfact_vectors)
+    #fact = (1./np.sqrt(error**2+1))*np.exp(np.log(error**2+1)*perturbed_previous_multfact_vectors)
+    fact = (1./np.sqrt(error**2+1))*np.exp(np.sqrt(np.log(error**2+1))*perturbed_previous_multfact_vectors)
     perturbed_rain = np.multiply(fact, actual_rain_vector)
     
     return perturbed_rain
