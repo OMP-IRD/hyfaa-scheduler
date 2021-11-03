@@ -86,7 +86,10 @@ Use docker (best option), or use a unix virtual machine.
 
 #### With Docker
 
-- edit `run_docker.sh` to mount the configuration folder chosen as `/work`, and the launch `run_docker.sh`
+- edit `run_docker.sh` to
+  - mount the configuration folder chosen as `/work`,
+  - adjust the hydroweb credentials
+and launch `run_docker.sh`
 
 #### Without docker
 
@@ -99,5 +102,3 @@ Use docker (best option), or use a unix virtual machine.
 __WARNING:__ So that modules and paths, pythonpaths are set on the node, you must either add them to your ~/.bashrc, or to the `run.sh` script in the configuration folder.
 
 __NB:__ You can use the `--pbs_name` option to set your job name; `hyfaa` by default.
-
-
