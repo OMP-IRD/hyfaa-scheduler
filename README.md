@@ -46,10 +46,10 @@ Use for instance if you do not have root priviledges on your machine
 
 3. Run `./install.sh ${mgb_iph_install_dir}`, `${mgb_iph_install_dir}` being any directory (must not exist prior to installation).
 4. You will need to add paths to $PATH and $PYTHONPATH to directories within `${mgb_iph_install_dir}` that contain `hyfaa` and `mgb_iph` executables:
-"""
+```
 export PATH=${mgb_iph_install_dir}:${mgb_iph_install_dir}/bin:$PATH
 export PYTHONPATH=$(find ${mgb_iph_install_dir} -type d -iname 'site-packages'):$PYTHONPATH
-"""
+```
 
 NB:
 - The export commands necessary will be shown at the end of the install script.
