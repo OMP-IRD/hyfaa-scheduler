@@ -6,10 +6,10 @@ verbose: 1
 #init conditions (for first init i.e. if hydrological_states_database_directory is empty)
 #these conditions are stored into the hydrological states database => if the database exists and the conditions don't match, the program returns an error
 init_conditions:
-  time_start: '2020-01-01T00:00:00.000000'
+  time_start: '2022-06-01T00:00:00.000000'
   #to start model with an real initial hydrological state => if None than no hydrological state is loaded
   #default configuration is to use the result of a 1200 days simulation starting 01/01/2011 and ending 15/04/2014, this helps initialize the model faster
-  hydrological_state_start: 
+  hydrological_state_start: ${hyfaa_workdir}/input_data/forcing_data.nc
 scheduler_time_step: 1.
 forecast_time_span: 3.
 #choose an ensemble size of 1 if you do not wish to perturb rain inputs
