@@ -46,6 +46,8 @@ def get_hysope_wsh(sv_names, min_date=None, max_date=None, verbose=1):
         if max_date is not None:
             req_txt += '&edate=%s'%max_date.strftime('%Y-%m-%d')
         req_txt += '&user=%s&pwd=%s'%(hydroweb_credentials['user'], hydroweb_credentials['pwd'])
+        if verbose >= 1:
+            print('URL {}'.format(req_txt))
         data_loc = requests.get(req_txt).json()['data']
         datetimes_loc = [datetime.strptime(el['date'] + 'T' + el['time'], '%Y-%m-%dT%H:%M') for el in data_loc]
         values_loc = [float(el['orthometric_height_of_water_surface_at_reference_position']) if el['orthometric_height_of_water_surface_at_reference_position'] is not None else None  for el in data_loc]
