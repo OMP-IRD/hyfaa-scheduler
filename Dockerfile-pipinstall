@@ -6,6 +6,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
+ENV PYTHONUNBUFFERED 1
+
+FROM base AS builder
 #RUN ulimit -s unlimited
 
 #install libraries
@@ -15,17 +18,33 @@ ENV LC_ALL C.UTF-8
 #    && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
-    && apt-get -y install build-essential gfortran cmake libnetcdf-dev libnetcdff-dev
+    && apt-get -y install build-essential gfortran cmake libnetcdf-dev libnetcdff-dev  \
+    && apt-get -q clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Use a virtualenv
+RUN python -m venv /opt/venv
+# Enable venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 # installs common to builder & production
-RUN pip install numpy scipy netCDF4 pyyaml progress pandas pytest requests SALib ftputil
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 COPY install.sh install.sh
 COPY README.md README.md
 COPY src src
-RUN ./install.sh /hyfaa
-ENV PATH /hyfaa:/hyfaa/bin:${PATH}
-ENV PYTHONPATH /hyfaa/lib/python3.11/site-packages:${PYTHONATH}
+# REmove any sudo references as build we be run as root
+RUN sed -i 's|sudo ||g' ./install.sh
+RUN ./install.sh
+
+FROM base AS runner
+# Copy built fortran MGB binary
+COPY --from=builder /usr/local/bin/mgb_iph /usr/local/bin/mgb_iph
+# Copy built venv
+COPY --from=builder /opt/venv /opt/venv
+# Enable venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 RUN mkdir /work
 WORKDIR /work

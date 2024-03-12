@@ -1,0 +1,10 @@
+numpy
+scipy
+netCDF4
+pyyaml
+progress
+pandas
+pytest
+requests
+SALib
+ftputil
