@@ -1,1 +1,1 @@
-docker build --tag=hyfaa:4.0 .
+docker build -f Dockerfile-pipinstall --tag=hyfaa:4.4 .
