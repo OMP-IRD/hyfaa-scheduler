@@ -1,0 +1,64 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -53.8938,
+            3.3976
+        ]
+    },
+    "properties": {
+        "resource": "R_MARONI_TAMPOK_KM0345",
+        "basin": "Maroni",
+        "river": "Tampok",
+        "validation_criteria": "Automatic",
+        "comment": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "country": "France",
+        "id": "0000000006495",
+        "institution": "LEGOS, CLS, CNES",
+        "source": "Derived from satellite altimetry",
+        "references": "https://hydroweb.theia-land.fr",
+        "archive_facility": "CLS",
+        "time_coverage_start": "2018-12-05 01:33:00",
+        "time_coverage_end": "2024-03-05 01:34:00",
+        "long_name": "Lake and River Water Level",
+        "processing_level": "LEVEL3B",
+        "processing_mode": "Near Real Time",
+        "status": "operational",
+        "copyright": "Hydroweb 2018",
+        "contacts": "Helpdesk: https://hydroweb.theia-land.fr/hydroweb/guide?lang=en \n Accountable contact: contact.hydroweb@groupcls.com \n Owner contact: hydroweb.theia-land@cnes.fr",
+        "inspire_theme": "Hydrography",
+        "gemet_keywords": "water level, water management, hydrometry, hydrology, climate, seasonal variation, environmental data, environmental monitoring, monitoring, remote sensing",
+        "gcmd_keywords": "TERRESTRIAL HYDROSPHERE, SURFACE WATER",
+        "iso19115_topic_categories": "elevation,inlandWaters",
+        "credit": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "purpose": "To be completed...",
+        "resource_mimetype": "application/json",
+        "water_surface_reference_name": "EGM2008",
+        "water_surface_reference_datum_altitude": -31.5,
+        "missing_value": 9999.999
+    },
+    "data": [
+        {
+            "identifier": "R_MARONI_TAMPOK_KM0345",
+            "date": "2023-11-18",
+            "time": "01:34",
+            "orthometric_height_of_water_surface_at_reference_position": 94.56,
+            "associated_uncertainty": 0.03
+        },
+        {
+            "identifier": "R_MARONI_TAMPOK_KM0345",
+            "date": "2023-12-15",
+            "time": "01:34",
+            "orthometric_height_of_water_surface_at_reference_position": 95.44,
+            "associated_uncertainty": 0.01
+        },
+        {
+            "identifier": "R_MARONI_TAMPOK_KM0345",
+            "date": "2024-01-11",
+            "time": "01:33",
+            "orthometric_height_of_water_surface_at_reference_position": 95.7,
+            "associated_uncertainty": 0.02
+        }
+    ]
+}

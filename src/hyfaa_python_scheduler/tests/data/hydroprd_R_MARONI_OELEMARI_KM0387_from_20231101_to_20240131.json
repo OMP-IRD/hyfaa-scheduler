@@ -1,0 +1,64 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -54.2864,
+            3.1944
+        ]
+    },
+    "properties": {
+        "resource": "R_MARONI_OELEMARI_KM0387",
+        "basin": "Maroni",
+        "river": "Oelemari",
+        "validation_criteria": "Automatic",
+        "comment": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "country": "Suriname",
+        "id": "0000000006494",
+        "institution": "LEGOS, CLS, CNES",
+        "source": "Derived from satellite altimetry",
+        "references": "https://hydroweb.theia-land.fr",
+        "archive_facility": "CLS",
+        "time_coverage_start": "2018-12-10 13:38:00",
+        "time_coverage_end": "2024-02-12 13:39:00",
+        "long_name": "Lake and River Water Level",
+        "processing_level": "LEVEL3B",
+        "processing_mode": "Near Real Time",
+        "status": "operational",
+        "copyright": "Hydroweb 2018",
+        "contacts": "Helpdesk: https://hydroweb.theia-land.fr/hydroweb/guide?lang=en \n Accountable contact: contact.hydroweb@groupcls.com \n Owner contact: hydroweb.theia-land@cnes.fr",
+        "inspire_theme": "Hydrography",
+        "gemet_keywords": "water level, water management, hydrometry, hydrology, climate, seasonal variation, environmental data, environmental monitoring, monitoring, remote sensing",
+        "gcmd_keywords": "TERRESTRIAL HYDROSPHERE, SURFACE WATER",
+        "iso19115_topic_categories": "elevation,inlandWaters",
+        "credit": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "purpose": "To be completed...",
+        "resource_mimetype": "application/json",
+        "water_surface_reference_name": "EGM2008",
+        "water_surface_reference_datum_altitude": -29.86,
+        "missing_value": 9999.999
+    },
+    "data": [
+        {
+            "identifier": "R_MARONI_OELEMARI_KM0387",
+            "date": "2023-11-23",
+            "time": "13:39",
+            "orthometric_height_of_water_surface_at_reference_position": 122.36,
+            "associated_uncertainty": 0.22
+        },
+        {
+            "identifier": "R_MARONI_OELEMARI_KM0387",
+            "date": "2023-12-20",
+            "time": "13:39",
+            "orthometric_height_of_water_surface_at_reference_position": 122.89,
+            "associated_uncertainty": 0.22
+        },
+        {
+            "identifier": "R_MARONI_OELEMARI_KM0387",
+            "date": "2024-01-16",
+            "time": "13:39",
+            "orthometric_height_of_water_surface_at_reference_position": 123.08,
+            "associated_uncertainty": 0.04
+        }
+    ]
+}

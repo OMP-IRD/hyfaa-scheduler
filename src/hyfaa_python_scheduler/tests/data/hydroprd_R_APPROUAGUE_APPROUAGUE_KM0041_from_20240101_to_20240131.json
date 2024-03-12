@@ -1,0 +1,50 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -52.1744,
+            4.2756
+        ]
+    },
+    "properties": {
+        "resource": "R_APPROUAGUE_APPROUAGUE_KM0041",
+        "basin": "Approuague",
+        "river": "Approuague",
+        "validation_criteria": "Automatic",
+        "comment": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "country": "France",
+        "id": "0000000008168",
+        "institution": "LEGOS, CLS, CNES",
+        "source": "Derived from satellite altimetry",
+        "references": "https://hydroweb.theia-land.fr",
+        "archive_facility": "CLS",
+        "time_coverage_start": "2018-12-18 13:31:00",
+        "time_coverage_end": "2024-02-20 13:31:00",
+        "long_name": "Lake and River Water Level",
+        "processing_level": "LEVEL3B",
+        "processing_mode": "Near Real Time",
+        "status": "operational",
+        "copyright": "Hydroweb 2018",
+        "contacts": "Helpdesk: https://hydroweb.theia-land.fr/hydroweb/guide?lang=en \n Accountable contact: contact.hydroweb@groupcls.com \n Owner contact: hydroweb.theia-land@cnes.fr",
+        "inspire_theme": "Hydrography",
+        "gemet_keywords": "water level, water management, hydrometry, hydrology, climate, seasonal variation, environmental data, environmental monitoring, monitoring, remote sensing",
+        "gcmd_keywords": "TERRESTRIAL HYDROSPHERE, SURFACE WATER",
+        "iso19115_topic_categories": "elevation,inlandWaters",
+        "credit": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "purpose": "To be completed...",
+        "resource_mimetype": "application/json",
+        "water_surface_reference_name": "EGM2008",
+        "water_surface_reference_datum_altitude": -33.46,
+        "missing_value": 9999.999
+    },
+    "data": [
+        {
+            "identifier": "R_APPROUAGUE_APPROUAGUE_KM0041",
+            "date": "2024-01-24",
+            "time": "13:31",
+            "orthometric_height_of_water_surface_at_reference_position": 0.72,
+            "associated_uncertainty": 0.01
+        }
+    ]
+}
