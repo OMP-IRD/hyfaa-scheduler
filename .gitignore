@@ -5,6 +5,6 @@
 **/__pycache__/
 
 # Work data
-work_configurations/*
+#work_configurations/*
 *.tar.gz
 databases/*
