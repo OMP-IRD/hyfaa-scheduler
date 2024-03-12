@@ -39,10 +39,10 @@ Make docker image with `make_docker.sh`
 
 NB:
 - This will store `hyfaa` python modules in your default python site-package which is already in your import paths, so no action required.
-- `mgb_iph` script will be stored in `/usr/local/bin` (requires root priviledges) which should be in you $PATH, so no action should be necessary.
+- `mgb_iph` script will be stored in `/usr/local/bin` (requires root privileges) which should be in your $PATH, so no action should be necessary.
 
 #### Local install
-Use for instance if you do not have root priviledges on your machine
+Use for instance if you do not have root privileges on your machine
 
 3. Run `./install.sh ${mgb_iph_install_dir}`, `${mgb_iph_install_dir}` being any directory (must not exist prior to installation).
 4. You will need to add paths to $PATH and $PYTHONPATH to directories within `${mgb_iph_install_dir}` that contain `hyfaa` and `mgb_iph` executables:
@@ -53,12 +53,12 @@ export PYTHONPATH=$(find ${mgb_iph_install_dir} -type d -iname 'site-packages'):
 
 NB:
 - The export commands necessary will be shown at the end of the install script.
-- __To avoid entering those lines everytime you open a new terminal, simply add them to you ~/.bashrc__
+- __To avoid entering those lines everytime you open a new terminal, simply add them to your ~/.bashrc__
 
 ### Standard linux install on CNES cluster
 
 #### Method 1
-This is the preferred method as it installs an independant python environment and therefore allows more flexibility to add other librairies in the future and prevents problems with changes on HAL python modules.
+This is the preferred method as it installs an independent python environment and therefore allows more flexibility to add other libraries in the future and prevents problems with changes on HAL python modules.
 - `module purge` to avoid module conflicts
 - `module load cmake netcdf/4.4.1 conda`
 - `conda create -n hyfaa_env python=3.7`
@@ -81,7 +81,7 @@ Use docker (best option), or use a unix virtual machine.
 ## Use HYFAA
 
 - choose a configuration folder in `work_configurations`
-- follow the `README.md` inside of the configuration folder to download input_data folder (hydrological static data configuration) and initialized `databases` (may be optionnal)
+- follow the `README.md` inside of the configuration folder to download input_data folder (hydrological static data configuration) and initialized `databases` (may be optional)
 
 
 #### With Docker
@@ -93,11 +93,11 @@ and launch `run_docker.sh`
 
 #### Without docker
 
-- go to the configuration folder chosen and launch `run.sh`
+- go to the chosen configuration folder and launch `run.sh`
 
 #### Using PBS on CNES cluster
 
-- go to the configuration folder chosen and launch `./run_pbs.py`
+- go to the chosen configuration folder and launch `./run_pbs.py`
 
 __WARNING:__ So that modules and paths, pythonpaths are set on the node, you must either add them to your ~/.bashrc, or to the `run.sh` script in the configuration folder.
 
