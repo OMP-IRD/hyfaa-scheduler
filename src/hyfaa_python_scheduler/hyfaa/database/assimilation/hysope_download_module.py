@@ -23,6 +23,9 @@
 import requests, json
 from datetime import datetime, timedelta
 import numpy as np
+import pandas as pd
+import urllib
+import io
 
 from hyfaa.utils.fileenv import fileenv
 
@@ -32,6 +35,7 @@ hydroweb_credentials = {
 }
 hydroweb_baserequest = 'http://hydroweb.theia-land.fr/hydroweb/authdownload?products='
 
+hydroweb_next_service_url = "https://hydroweb.next.theia-land.fr/geoserver/HYDROWEB/ows?"
 
 def get_hysope_wsh(sv_names, min_date=None, max_date=None, verbose=1):
 
@@ -64,14 +68,58 @@ def get_hysope_wsh(sv_names, min_date=None, max_date=None, verbose=1):
             print('Downloaded assimilation data from SV %s in %s'%(sv_name, datetime.utcnow()-tstart))
     if verbose >= 1:
         print('Downloaded all assimilation data in %s'%(datetime.utcnow()-tstart0))
-
-
     return dico_out
+
+
+def get_hysope_wsh_hydrowebnext(sv_names, min_date=None, max_date=None, verbose=1):
+    """
+    Get water height from Hydroweb.next services. Should replace get_hysope_wsh function, that was using the old
+    hydroweb API.
+
+    The official API does not really provide the expected extraction
+    services, so this is using the underlying geoserver WFS services, with ad-hoc CQL filter
+    This will allow us to retrieve the full set of data in one single query
+
+    :param sv_names: list of virtual stations identifiers
+    :param min_date: datetime object
+    :param max_date: datetime object
+    :param verbose: verbosity level
+    :return: a dict: for each station id (key), we get lists of dates, height, uncertainty data
+    """
+    # Build the GET params for the WFS request. We will use a CSV output, compact and easy to load into pandas
+    sv_ids_str = "','".join(sv_names)
+    params = {
+        "service": "WFS",
+        "request": "GetFeature",
+        "version": "1.1.1",
+        "typename": "hydroweb_rivers_wse",
+        "CQL_FILTER": f"name IN ('{sv_ids_str}') and start_time BETWEEN '{min_date.isoformat()}' and '{max_date.isoformat()}'",
+        "outputFormat": "csv",
+        "sortBy": "start_time"
+    }
+    encoded_params = urllib.parse.urlencode(params)
+
+    req_url = f"{hydroweb_next_service_url}{encoded_params}"
+    if verbose >= 1:
+        print('URL {}'.format(req_url))
+    # directly opening with read_csv doesn't seem to work, so using here the more robust traditional approach
+    csv_data=requests.get(req_url).content
+    df=pd.read_csv(io.StringIO(csv_data.decode('utf-8')), usecols=["name", "start_time", "wse", "wse_u"])
+    # Parse dates as datetime. And since Pandas uses its own internal format, and the next function (and tests)
+    # expects datetime, we convert it back to python datetime objects
+    times = pd.to_datetime(df["start_time"]).dt.to_pydatetime()
+    df["start_time"] = pd.Series(times, dtype="object")
+    # Regroup the data by virtual station, then build the dicts as they were on previous function
+    dg=df.groupby("name")
+    values = {k: {"dates": t["start_time"].to_list(), "wsh": t["wse"].to_list(),
+              "wsh_uncertainty": t["wse_u"].to_list(), } for k, t in dg}
+    return values
 
 
 def get_hysope_flowrates(sv_dict, min_date=None, max_date=None, verbose=1):
 
-    wsh_info = get_hysope_wsh(list(sv_dict.keys()), min_date=min_date, max_date=max_date, verbose=verbose)
+    # wsh_info = get_hysope_wsh(list(sv_dict.keys()), min_date=min_date, max_date=max_date, verbose=verbose)
+    wsh_info = get_hysope_wsh_hydrowebnext(list(sv_dict.keys()), min_date=min_date, max_date=max_date, verbose=verbose)
 
     dico_out = dict()
     for sv_name, sv_info in sv_dict.items():
