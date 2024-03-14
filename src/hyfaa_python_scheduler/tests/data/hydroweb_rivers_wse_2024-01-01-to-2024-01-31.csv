@@ -1,0 +1,3 @@
+FID,fid,start_time,end_time,geom,name,river,basin,status,validation,wse,wse_u
+hydroweb_rivers_wse.R_APPROUAGUE_APPROUAGUE_KM0047,R_APPROUAGUE_APPROUAGUE_KM0047,2024-01-19T01:26:00,2024-01-19T01:26:00,POINT (4.2544 -52.2139),R_APPROUAGUE_APPROUAGUE_KM0047,Approuague,Approuague,operational,Automatic,0.84,0.03
+hydroweb_rivers_wse.R_APPROUAGUE_APPROUAGUE_KM0041,R_APPROUAGUE_APPROUAGUE_KM0041,2024-01-24T13:31:00,2024-01-24T13:31:00,POINT (4.2756 -52.1744),R_APPROUAGUE_APPROUAGUE_KM0041,Approuague,Approuague,operational,Automatic,0.72,0.01

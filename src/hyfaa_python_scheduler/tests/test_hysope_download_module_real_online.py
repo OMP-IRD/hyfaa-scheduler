@@ -10,6 +10,21 @@ class TestGetHysopeWsh(unittest.TestCase):
     """
     Test that the get_hysope_wsh returns the expected result, don't mock, use real online services
     """
+    def test_get_hysope_wsh_1m_with_online_hydroweb(self):
+        mind = '2024-01-01'
+        maxd = '2024-01-31'
+        sv_names = ['R_APPROUAGUE_APPROUAGUE_KM0041', 'R_APPROUAGUE_APPROUAGUE_KM0047', 'R_MARONI_MARONI_KM0054']
+        expected_return_value = {
+            'R_MARONI_MARONI_KM0054': {'dates': [datetime(2024, 1, 29, 13, 40)], 'wsh': [1.38],
+                                       'wsh_uncertainty': [0.02]},
+            'R_APPROUAGUE_APPROUAGUE_KM0047': {'dates': [datetime(2024, 1, 19, 1, 26)], 'wsh': [0.84],
+                                               'wsh_uncertainty': [0.03]},
+            'R_APPROUAGUE_APPROUAGUE_KM0041': {'dates': [datetime(2024, 1, 24, 13, 31)], 'wsh': [0.72],
+                                               'wsh_uncertainty': [0.01]}}
+        data = hysope.get_hysope_wsh(sv_names, min_date=datetime.fromisoformat(mind),
+                                     max_date=datetime.fromisoformat(maxd), verbose=0)
+        self.assertEqual(data, expected_return_value)
+
     def test_get_hysope_wsh_3m_with_online_hydroweb(self):
         mind = '2023-11-01'
         maxd = '2024-01-31'
@@ -97,9 +112,9 @@ class TestGetHysopeWsh(unittest.TestCase):
         :return:
         """
         mind = '2023-11-01'
-        maxd = '2024-01-31'
+        maxd = '2024-03-03'
         sv_names = ['R_OYAPOCK_CAMOPI_KM0177', 'R_MARONI_TAPANAHONY_KM0198', 'R_MARONI_OELEMARI_KM0387',
-                    'R_MARONI_TAMPOK_KM0345']
+                    'R_MARONI_TAMPOK_KM0345','R_MARONI_MARONI_KM0054']
 
         data = hysope.get_hysope_wsh(sv_names, min_date=datetime.fromisoformat(mind),
                                      max_date=datetime.fromisoformat(maxd), verbose=0)
