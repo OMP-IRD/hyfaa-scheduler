@@ -18,7 +18,7 @@ FROM base AS builder
 #    && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
-    && apt-get -y install build-essential gfortran cmake libnetcdf-dev libnetcdff-dev  \
+    && apt-get -y install build-essential gfortran cmake libnetcdf-dev libnetcdff-dev \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -39,6 +39,12 @@ RUN sed -i 's|sudo ||g' ./install.sh
 RUN ./install.sh
 
 FROM base AS runner
+
+RUN apt-get update \
+    && apt-get -y install libnetcdff7 netcdf-bin \
+    && apt-get -q clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy built fortran MGB binary
 COPY --from=builder /usr/local/bin/mgb_iph /usr/local/bin/mgb_iph
 # Copy built venv
