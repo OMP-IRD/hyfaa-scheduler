@@ -22,6 +22,13 @@ else
 fi
 
 ###########
+# Clear sqlite sql_lock files before starting the process
+if [[ "$CLEAR_LOCKS" == "true" ]]; then
+  echo "Looking for .sql_lock files and removing them if necessary (would cause the subsequents processes to fail)"
+  find . -name '*.sql_lock' -print0 | xargs rm -f
+fi
+
+###########
 #get forcing and assimilated data : common step for assimilated, ensemblist and mgbstandard solutions
 hyfaa_preprocessing_forcing.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
 hyfaa_preprocessing_assimilation.py --input_yaml_file ${hyfaa_workdir}/config/input_assimilated_solution.yaml
