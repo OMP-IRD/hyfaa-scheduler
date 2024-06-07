@@ -30,7 +30,7 @@ Make docker image with `make_docker.sh`
 
 ### On a linux PC without docker
 
-1. `apt-get install build-essential gfortran cmake libnetcdf-dev libnetcdff-dev`
+1. `apt-get install build-essential gfortran cmake libnetcdf-dev libnetcdff-dev netcdf-bin`
 2. `pip install numpy numba scipy netCDF4 pyyaml progress pandas geopandas pytest requests SALib ftputil`
 
 #### Standard install

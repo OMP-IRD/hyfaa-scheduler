@@ -92,7 +92,7 @@ def get_hysope_wsh_hydrowebnext(sv_names, min_date=None, max_date=None, verbose=
         "service": "WFS",
         "request": "GetFeature",
         "version": "1.1.1",
-        "typename": "hydroweb_rivers_wse",
+        "typename": "hydroweb_rivers_ope_wse",
         "CQL_FILTER": f"name IN ('{sv_ids_str}') and start_time BETWEEN '{min_date.isoformat()}' and '{max_date.isoformat()}'",
         "outputFormat": "csv",
         "sortBy": "start_time"
@@ -103,14 +103,14 @@ def get_hysope_wsh_hydrowebnext(sv_names, min_date=None, max_date=None, verbose=
     if verbose >= 1:
         print('URL {}'.format(req_url))
     # directly opening with read_csv doesn't seem to work, so using here the more robust traditional approach
-    csv_data=requests.get(req_url).content
-    df=pd.read_csv(io.StringIO(csv_data.decode('utf-8')), usecols=["name", "start_time", "wse", "wse_u"])
+    csv_data = requests.get(req_url).content
+    df = pd.read_csv(io.StringIO(csv_data.decode('utf-8')), usecols=["name", "start_time", "wse", "wse_u"])
     # Parse dates as datetime. And since Pandas uses its own internal format, and the next function (and tests)
     # expects datetime, we convert it back to python datetime objects
     times = pd.to_datetime(df["start_time"]).dt.to_pydatetime()
     df["start_time"] = pd.Series(times, dtype="object")
     # Regroup the data by virtual station, then build the dicts as they were on previous function
-    dg=df.groupby("name")
+    dg = df.groupby("name")
     values = {k: {"dates": t["start_time"].to_list(), "wsh": t["wse"].to_list(),
               "wsh_uncertainty": t["wse_u"].to_list(), } for k, t in dg}
     return values
