@@ -4,7 +4,10 @@ netCDF4
 pyyaml
 progress
 pandas
+geopandas
+eodag
 pytest
 requests
 SALib
+shapely
 ftputil
