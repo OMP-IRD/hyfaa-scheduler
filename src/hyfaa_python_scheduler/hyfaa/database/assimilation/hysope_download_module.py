@@ -73,6 +73,7 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
     # can get omitted
     pd_stations = geopandas.GeoSeries([Point(s["lon"], s["lat"]) for s in sv_dict.values()])
     stations_envelope_wkt = pd_stations.buffer(0.05).unary_union.envelope.wkt
+    # stations_envelope_wkt = "POLYGON ((-10.3800 5.2930, 14.0680 5.2930, 14.0680 17.1080, -10.3800 17.1080, -10.3800 5.2930))"
     # stations_envelope_geojson = shapely.to_geojson(shapely.from_wkt(stations_envelope_wkt))
     # Using STAC client doesn't work. STAC implementation of hydrowebnext seems buggy, retrieving the search results
     # fails at some point making the whole process unusable. Last resort is using EODAG software
@@ -145,7 +146,7 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
     for product in search_results:
         file_name = list(product.assets.data.keys())[0]
         station_name = get_name_from_hydrowebnext_filename(file_name)
-        custom_logger.info(f"{station_name}      ({file_name})")
+        custom_logger.info(f"{station_name}      ({product.properties['id']})")
         ids_mappings[product.properties["id"]] = {
             "filename": file_name,
             "station_name": station_name
@@ -176,23 +177,31 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
     for path, subdirs, files in os.walk(hysope_results_download_path):
         for name in files:
             if fnmatch(name, filename_pattern):
-                df = pd.read_csv(os.path.join(path, name), header=None, skiprows=45, sep=" ",
-                                 names=["d", "t", "h", "h_u", "sep", "lon", "lat", "c7", "c8", "c9", "c10", "c11",
-                                        "c12",
-                                        "c13", "c14",
-                                        "c15"])
-                # Build a proper datetime column for filtering
-                df["date"] = df[["d", "t"]].agg('T'.join, axis=1)
-                df["date"] = pd.to_datetime(df['date'], format='%Y-%m-%dT%H:%M')
-                # Filter data based on min-max date
-                date_mask = (df['date'] >= min_date) & (df['date'] < max_date)
-                filtered_df = df.loc[date_mask]
+                try:
+                    df = pd.read_csv(os.path.join(path, name),
+                                     header=None,
+                                     comment='#',
+                                     sep=" ",
+                                     names=["d", "t", "h", "h_u", "sep", "lon", "lat", "c7", "c8", "c9", "c10", "c11",
+                                            "c12",
+                                            "c13", "c14",
+                                            "c15"]
+                                     )
+                    custom_logger.info(f"Working on file {os.path.join(path, name)}")
+                    # Build a proper datetime column for filtering
+                    df["date"] = df[["d", "t"]].agg('T'.join, axis=1)
+                    df["date"] = pd.to_datetime(df['date'], format='%Y-%m-%dT%H:%M')
+                    # Filter data based on min-max date
+                    date_mask = (df['date'] >= min_date) & (df['date'] < max_date)
+                    filtered_df = df.loc[date_mask]
 
-                wsh_values[get_name_from_hydrowebnext_filename(name)] = {
-                    'dates': filtered_df["date"].tolist(),
-                    'wsh': filtered_df["h"].tolist(),
-                    'wsh_uncertainty': filtered_df["h_u"].tolist()
-                }
+                    wsh_values[get_name_from_hydrowebnext_filename(name)] = {
+                        'dates': filtered_df["date"].tolist(),
+                        'wsh': filtered_df["h"].tolist(),
+                        'wsh_uncertainty': filtered_df["h_u"].tolist()
+                    }
+                except TypeError as e:
+                    custom_logger.error(f"TypeError processing file {os.path.join(path, name)}. Skipping the file")
     # Sort the keys in alphabetical order. Not necessary but easier to inspect/debug
     wsh_values_sorted = dict(sorted(wsh_values.items()))
     rmtree(hysope_results_download_path, ignore_errors=True)
