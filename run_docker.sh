@@ -1,5 +1,4 @@
 docker run --rm -it \
-  -e HYDROWEB_USER="remi.jugier@magellium.fr" \
-  -e HYDROWEB_PASSWORD="hydroMGB31"  \
+  -e EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY="yourverysecretapikey" \
   -v $(pwd)/work_configurations/operational_niger_gsmap:/work \
   hyfaa:4.0 $@

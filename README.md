@@ -88,11 +88,14 @@ Use docker (best option), or use a unix virtual machine.
 
 - edit `run_docker.sh` to
   - mount the configuration folder chosen as `/work`,
-  - adjust the hydroweb credentials
+  - adjust the hydrowebnext credentials (API key)
 and launch `run_docker.sh`
 
 #### Without docker
 
+- set and environment variable named `EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY`, value is your hydroweb.next API key. 
+  - On linux environment, it could be done in the console: ` export EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY=yourverysecretapikey`
+  - On Windows environment, editing the environment variables is usually done in a graphical user interface
 - go to the chosen configuration folder and launch `run.sh`
 
 #### Using PBS on CNES cluster
