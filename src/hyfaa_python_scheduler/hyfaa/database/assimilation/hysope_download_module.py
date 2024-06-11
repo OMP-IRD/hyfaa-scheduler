@@ -192,7 +192,7 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
                     df["date"] = df[["d", "t"]].agg('T'.join, axis=1)
                     df["date"] = pd.to_datetime(df['date'], format='%Y-%m-%dT%H:%M')
                     # Filter data based on min-max date
-                    date_mask = (df['date'] >= min_date) & (df['date'] < max_date)
+                    date_mask = (df['date'] >= min_date) & (df['date'] <= max_date)
                     filtered_df = df.loc[date_mask]
 
                     wsh_values[get_name_from_hydrowebnext_filename(name)] = {
