@@ -214,7 +214,7 @@ class Assimilation_Database(object):
     @staticmethod
     def str2date(string):
         """converts datetime string to datetime object"""
-        if string is 'None':
+        if string == 'None':
             return None
         return datetime.strptime(string + '000', '%Y-%m-%dT%H:%M:%S.%f')
         

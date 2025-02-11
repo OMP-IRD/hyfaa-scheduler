@@ -1,0 +1,128 @@
+R_APPROUAGUE_APPROUAGUE_KM0041:
+  coeff_A: 6.543
+  coeff_B: 2.113
+  coeff_Z0: -5.447
+  lat: 4.276
+  lon: -52.174
+  mesh_id: 4277
+  ratio_uncertainty: 0.2228
+R_APPROUAGUE_APPROUAGUE_KM0047:
+  coeff_A: 82.486
+  coeff_B: 1.075
+  coeff_Z0: -2.150
+  lat: 4.254
+  lon: -52.214
+  mesh_id: 4270
+  ratio_uncertainty: 0.2136
+R_MARONI_MARONI_KM0054:
+  coeff_A: 71.713
+  coeff_B: 2.793
+  coeff_Z0: -1.783
+  lat: 5.238
+  lon: -54.297
+  mesh_id: 4447
+  ratio_uncertainty: 0.1709 
+R_MARONI_MARONI_KM0055:
+  coeff_A: 35.181
+  coeff_B: 3.098
+  coeff_Z0: -2.134
+  lat: 5.233
+  lon: -54.302
+  mesh_id: 4446
+  ratio_uncertainty: 0.1721
+R_MARONI_MARONI_KM0156:
+  coeff_A: 329.078
+  coeff_B: 1.911
+  coeff_Z0: 26.860
+  lat: 4.526
+  lon: -54.449
+  mesh_id: 4427
+  ratio_uncertainty: 0.0879
+R_MARONI_OELEMARI_KM0387:
+  coeff_A: 92.880
+  coeff_B: 1.077
+  coeff_Z0: 122.496
+  lat: 3.194
+  lon: -54.286
+  mesh_id: 4153
+  ratio_uncertainty: 0.1398
+R_MARONI_OELEMARI_KM0394:
+  coeff_A: 57.935
+  coeff_B: 1.277
+  coeff_Z0: 122.388
+  lat: 3.187
+  lon: -54.315
+  mesh_id: 4141
+  ratio_uncertainty: 0.1262
+R_MARONI_TAMPOK_KM0345:
+  coeff_A: 4.927
+  coeff_B: 2.325
+  coeff_Z0: 92.348
+  lat: 3.398
+  lon: -53.894
+  mesh_id: 4264
+  ratio_uncertainty: 0.0753
+R_MARONI_TAPANAHONY_KM0193:
+  coeff_A: 396.068
+  coeff_B: 1.122
+  coeff_Z0: 46.406
+  lat: 4.253
+  lon: -54.518
+  mesh_id: 4411
+  ratio_uncertainty: 0.1776
+R_MARONI_TAPANAHONY_KM0198:
+  coeff_A: 398.039
+  coeff_B: 1.851
+  coeff_Z0: 48.170
+  lat: 4.229
+  lon: -54.546
+  mesh_id: 4411
+  ratio_uncertainty: 0.1886
+R_MARONI_TAPANAHONY_KM0296:
+  coeff_A: 148.227
+  coeff_B: 1.255
+  coeff_Z0: 96.598
+  lat: 3.699
+  lon: -54.896
+  mesh_id: 4329
+  ratio_uncertainty: 0.1478
+R_MARONI_TAPANAHONY_KM0344:
+  coeff_A: 8.082
+  coeff_B: 2.443
+  coeff_Z0: 107.065
+  lat: 3.479
+  lon: -55.157
+  mesh_id: 4275
+  ratio_uncertainty: 0.1838
+R_MARONI_TAPANAHONY_KM0367:
+  coeff_A: 14.031
+  coeff_B: 2.567
+  coeff_Z0: 141.903
+  lat: 3.483
+  lon: -55.316
+  mesh_id: 4237
+  ratio_uncertainty: 0.1380
+R_OYAPOCK_CAMOPI_KM0177:
+  coeff_A: 43.165
+  coeff_B: 1.578
+  coeff_Z0: 53.930
+  lat: 3.208
+  lon: -52.412
+  mesh_id: 4224
+  ratio_uncertainty: 0.0388
+R_OYAPOCK_OYAPOCK_KM0103:
+  coeff_A: 195.899
+  coeff_B: 1.285
+  coeff_Z0: 26.574
+  lat: 3.533
+  lon: -52.054
+  mesh_id: 4324
+  ratio_uncertainty: 0.0475
+R_OYAPOCK_OYAPOCK_KM0197:
+  coeff_A: 130.047
+  coeff_B: 1.099
+  coeff_Z0: 61.961
+  lat: 2.944
+  lon: -52.392
+  mesh_id: 4189
+  ratio_uncertainty: 0.0887

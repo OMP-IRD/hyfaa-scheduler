@@ -1,4 +1,5 @@
-set -e 
+#!/bin/bash
+set -e
 
 #hyfaa_workdir, hyfaa_temp_dir and hyfaa_config_folder variables must be set not only for this script but also because they are used in configuration files (in hyfaa_config_folder)
 

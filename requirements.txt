@@ -1,0 +1,13 @@
+numpy
+scipy
+netCDF4
+pyyaml
+progress
+pandas
+geopandas
+eodag>=3.0.1
+pytest
+requests
+SALib
+shapely
+ftputil

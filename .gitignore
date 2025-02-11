@@ -1,0 +1,11 @@
+# IDE
+.idea
+.venv
+
+# build artefacts
+**/__pycache__/
+
+# Work data
+#work_configurations/*
+*.tar.gz
+databases/*

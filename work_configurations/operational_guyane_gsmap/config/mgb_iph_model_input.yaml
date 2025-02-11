@@ -1,0 +1,75 @@
+#GENERAL INFORMATIONS FILE FOR LARGE SCALE HYDROLOGIC MODEL
+
+#hardcoded configuration : some coefficients/parameters are hardcoded into the MGB code and are specific to the basin
+hardcoded_configuration: niger
+
+#0: simulation, 1: calibration, 2: prevision
+#must be 0 for use with scheduler
+run_mode: 0
+
+#overwrite hydrodynamic flag for all cells. empty: no overwrite. 0: not hydrodynamic routing for all cells. 1: hydrodynamic routing for all cells.
+#WARNING: hdflag variable is previously filled from hydrodynamic_module choice variable (in mini.gtp file HDR column or static_data.nc hydrodynamic_module variable), but since this "hack" was in the original program, I copied it pending further instructions...
+hydrodynamic_module: 1
+
+#main output directory
+output_directory:
+
+#calibration input file if in calibration mode (untested for now)
+calibration_mode_input_file:  
+
+#static data file
+static_data_file: 
+
+#precipitation file
+forcing_file: 
+forcing_dates_dt_max: 0.1
+forcing_use_dynamic_temperature: 0
+forcing_use_dynamic_relative_humidity: 0
+forcing_use_dynamic_wind_speed: 0
+forcing_use_dynamic_sunshine: 0
+forcing_use_dynamic_pressure: 0
+
+
+
+#start date, number of steps, dt of step, etc...
+day: 
+month: 
+year: 
+hour: 
+nt: 
+dt: 
+alpha: 0.30
+
+
+water_surface_slope: 0.20
+
+#hydrological state I/O
+hydrological_state_read_file: 
+hydrological_state_write_prefix_each_step: 
+hydrological_state_write_file: 
+
+
+#old hydrological state I/O
+old_hydrological_state_write_flag: 0
+old_water_balance_state_write_file: 
+old_water_inertial_state_write_file: 
+
+water_level_time_intervals:
+
+
+#observations and subtitude station files
+obs_file:
+subst_file:
+
+
+#observations
+obs_cell_indexes:
+
+#substitute stations
+subst_cell_indexes:
+
+
+
+
+
+

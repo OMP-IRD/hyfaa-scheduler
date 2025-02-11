@@ -1,0 +1,71 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -54.5461,
+            4.2286
+        ]
+    },
+    "properties": {
+        "resource": "R_MARONI_TAPANAHONY_KM0198",
+        "basin": "Maroni",
+        "river": "Tapanahony",
+        "validation_criteria": "Automatic",
+        "comment": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "country": "Suriname",
+        "id": "0000000006497",
+        "institution": "LEGOS, CLS, CNES",
+        "source": "Derived from satellite altimetry",
+        "references": "https://hydroweb.theia-land.fr",
+        "archive_facility": "CLS",
+        "time_coverage_start": "2019-03-09 01:35:00",
+        "time_coverage_end": "2024-01-24 01:35:00",
+        "long_name": "Lake and River Water Level",
+        "processing_level": "LEVEL3B",
+        "processing_mode": "Near Real Time",
+        "status": "operational",
+        "copyright": "Hydroweb 2018",
+        "contacts": "Helpdesk: https://hydroweb.theia-land.fr/hydroweb/guide?lang=en \n Accountable contact: contact.hydroweb@groupcls.com \n Owner contact: hydroweb.theia-land@cnes.fr",
+        "inspire_theme": "Hydrography",
+        "gemet_keywords": "water level, water management, hydrometry, hydrology, climate, seasonal variation, environmental data, environmental monitoring, monitoring, remote sensing",
+        "gcmd_keywords": "TERRESTRIAL HYDROSPHERE, SURFACE WATER",
+        "iso19115_topic_categories": "elevation,inlandWaters",
+        "credit": "Timeseries specified by LEGOS and computed by CLS on behalf of CNES and Copernicus Global Land",
+        "purpose": "To be completed...",
+        "resource_mimetype": "application/json",
+        "water_surface_reference_name": "EGM2008",
+        "water_surface_reference_datum_altitude": -33.09,
+        "missing_value": 9999.999
+    },
+    "data": [
+        {
+            "identifier": "R_MARONI_TAPANAHONY_KM0198",
+            "date": "2023-11-04",
+            "time": "01:35",
+            "orthometric_height_of_water_surface_at_reference_position": 48.96,
+            "associated_uncertainty": 0.06
+        },
+        {
+            "identifier": "R_MARONI_TAPANAHONY_KM0198",
+            "date": "2023-12-01",
+            "time": "01:35",
+            "orthometric_height_of_water_surface_at_reference_position": 49,
+            "associated_uncertainty": 0.02
+        },
+        {
+            "identifier": "R_MARONI_TAPANAHONY_KM0198",
+            "date": "2023-12-28",
+            "time": "01:35",
+            "orthometric_height_of_water_surface_at_reference_position": 49.15,
+            "associated_uncertainty": 0.08
+        },
+        {
+            "identifier": "R_MARONI_TAPANAHONY_KM0198",
+            "date": "2024-01-24",
+            "time": "01:35",
+            "orthometric_height_of_water_surface_at_reference_position": 48.59,
+            "associated_uncertainty": 0.11
+        }
+    ]
+}
