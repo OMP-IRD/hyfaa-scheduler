@@ -5,7 +5,7 @@ pyyaml
 progress
 pandas
 geopandas
-eodag>=2.12.1
+eodag>=3.0.1
 pytest
 requests
 SALib

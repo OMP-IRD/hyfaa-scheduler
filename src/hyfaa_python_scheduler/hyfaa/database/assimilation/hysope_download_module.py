@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import geopandas
 #######################################################################
 #  This code has been developped by Magellium SAS
 #
@@ -21,8 +20,12 @@ import geopandas
 #######################################################################
 
 from datetime import datetime
+
+# import pystac_client
+# import shapely
 from eodag import EODataAccessGateway, setup_logging
 from fnmatch import fnmatch
+import geopandas
 import logging
 import numpy as np
 import pandas as pd
@@ -74,23 +77,31 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
     pd_stations = geopandas.GeoSeries([Point(s["lon"], s["lat"]) for s in sv_dict.values()])
     stations_envelope_wkt = pd_stations.buffer(0.05).unary_union.envelope.wkt
     # stations_envelope_wkt = "POLYGON ((-10.3800 5.2930, 14.0680 5.2930, 14.0680 17.1080, -10.3800 17.1080, -10.3800 5.2930))"
-    # stations_envelope_geojson = shapely.to_geojson(shapely.from_wkt(stations_envelope_wkt))
     # Using STAC client doesn't work. STAC implementation of hydrowebnext seems buggy, retrieving the search results
     # fails at some point making the whole process unusable. Last resort is using EODAG software
-
+    # Complement of information: a further analysis shows that the issue is with the pagination. If param limit < max_items,
+    # the results will be paginated and you get an error.
+    # If you set limit = max_items and augment max_items so that you're sure to get everything, it will be OK
+    # (but I suppose there will be a limit at some point, memory-wise)
+    # stations_envelope_geojson = shapely.to_geojson(shapely.from_wkt(stations_envelope_wkt))
+    #
     # HYDROWEBNEXT_API_KEY = os.environ.get("HYDROWEBNEXT_API_KEY")
     # headers = {
     #     "X-API-Key": HYDROWEBNEXT_API_KEY,
     # }
     #
     # catalog = pystac_client.Client.open(hydroweb_next_stac_url, headers=headers)
-
+    #
     # results = catalog.search(
     #     collections="HYDROWEB_RIVERS_OPE",
     #     intersects=stations_envelope_geojson,
+    #     max_items=500,
+    #     limit=500,
     #     #datetime=[min_date,  max_date]
     # )
+    # counter=0
     # for item in results.items():
+    #     counter+=1
     #     try:
     #         print(item.id)
     #     except Exception as e:
@@ -157,7 +168,7 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
     custom_logger.info(f"Only {len(filtered_results)} products match the given list (hyfaa hysope config see config/hysope_svs.yaml file)")
     # Download all found products
     custom_logger.info(f"Downloading {len(filtered_results)} products...")
-    downloaded_paths = dag.download_all(filtered_results, outputs_prefix=hysope_results_download_path)
+    downloaded_paths = dag.download_all(filtered_results, output_dir=hysope_results_download_path)
     if downloaded_paths:
         distinct_values = list(set(downloaded_paths))
         # Check is distinct values length is equal to all results length
@@ -166,7 +177,7 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
                 f"Distinct values length is not equal to all results length. {len(distinct_values)} != {len(filtered_results)}")
             custom_logger.warning(f"Some files have not been downloaded")
         else:
-            custom_logger.info(f"All {len(filtered_results)} files have been successfully downloaded.")
+            custom_logger.info(f"All {len(filtered_results)} files have been successfully downloaded to {hysope_results_download_path}.")
     else:
         print(f"No files downloaded! Verify API-KEY and/or product search configuration.")
 
