@@ -189,16 +189,16 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
         for name in files:
             if fnmatch(name, filename_pattern):
                 try:
+                    custom_logger.info(f"Working on file {os.path.join(path, name)}")
                     df = pd.read_csv(os.path.join(path, name),
                                      header=None,
                                      comment='#',
-                                     sep=" ",
+                                     sep=r'\s+',
                                      names=["d", "t", "h", "h_u", "sep", "lon", "lat", "c7", "c8", "c9", "c10", "c11",
                                             "c12",
                                             "c13", "c14",
                                             "c15"]
                                      )
-                    custom_logger.info(f"Working on file {os.path.join(path, name)}")
                     # Build a proper datetime column for filtering
                     df["date"] = df[["d", "t"]].agg('T'.join, axis=1)
                     df["date"] = pd.to_datetime(df['date'], format='%Y-%m-%dT%H:%M')
