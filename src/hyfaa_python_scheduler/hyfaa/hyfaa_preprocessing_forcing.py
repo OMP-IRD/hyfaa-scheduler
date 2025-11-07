@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 
 #######################################################################
 #  This code has been developped by Magellium SAS
@@ -30,18 +31,34 @@ from hyfaa.common.yaml.yaml_parser import load_yaml
 from hyfaa.common.parallel_processing.easy_parallel import simple_parallel_run, Job
 from hyfaa.database.forcing.forcing_grid_db import ForcingGrid_DBManager
 from hyfaa.database.forcing.forcing_onmesh_db import ForcingOnMesh_DBManager
+from prometheus_client import CollectorRegistry, Gauge, Summary, write_to_textfile, push_to_gateway
 
+prometheus_registry = CollectorRegistry()
 
+prom_job_duration = Summary("job_duration_seconds", "Duration of a job run",
+                           registry=prometheus_registry, labelnames=["app", "instance"])
+prom_job_last_success = Gauge(
+            "job_last_success_unixtime",
+            "Last time a batch job successfully finished",
+            registry=prometheus_registry,
+            labelnames=["app", "instance"]
+        )
 
+prom_mgb_files_most_recent = Gauge(
+    "mgb_files_most_recent_unixtime",
+    "Most recent file generated during the hyfaa processes. Type can be forcing, onmesh, hydrostate. Source can be gsmap, era5, ecmwf, mgb",
+    registry=prometheus_registry,
+    labelnames=["app", "instance", "type", "source"]
+)
 
 def get_mesh_cell_centers_from_static_data_file(static_data_file):
     with netCDF4.Dataset(static_data_file) as ds:
         longitudes = ds.variables['longitude_center'][:]
         latitudes = ds.variables['latitude_center'][:]
     return longitudes, latitudes
-    
-    
 
+
+@prom_job_duration.labels(app="hyfaa", instance="guyane").time()
 def hyfaa_preprocessing_forcing(yaml_file_or_dict, gsmap_folder_local=None, verbose=None):
     """main scheduler processing function
     
@@ -110,7 +127,6 @@ def hyfaa_preprocessing_forcing(yaml_file_or_dict, gsmap_folder_local=None, verb
         
         if verbose >= 1:
             print('Forcing pre-proc: Downloading data for forcing grid database')
-
         for file_info in retrieve_forcing_data(missing_dates, geo_selection=dico['forcing_grid_geo_selection'], gsmap_folder_local=gsmap_folder_local, \
             nprocs=dico['nprocs'], temp_folder_base=main_temp_dir, verbose=verbose):
             file_info['data_type'] = 'rain'
@@ -119,14 +135,18 @@ def hyfaa_preprocessing_forcing(yaml_file_or_dict, gsmap_folder_local=None, verb
                 print('Forcing pre-processing: Added date %s to grid DB'%file_info['date_data'].strftime('%Y-%m-%dT%H:%M:%S'))
         gr_db_dates, gr_files_info = gr_db.get_dates(date_min=expected_forcing_dates[0], date_max=expected_forcing_dates[-1])
         gr_db_data_path = gr_db.get_data_path()
-
+        # Set metric
+        if gr_db_dates:
+            latest_time_seconds = gr_db_dates[-1].timestamp()
+            prom_mgb_files_most_recent.labels(app="hyfaa", instance="guyane", type="forcing",
+                                              source=dico['forcing_source']).set(latest_time_seconds)
     
     
     if verbose >= 2:
         print('Forcing pre-proc: Opening forcing on-mesh database...')
 
     #update forcing mesh DB
-    with ForcingGrid_DBManager(dico['forcing_onmesh_database_directory'], mode='w', verbose=0) as mesh_db:
+    with ForcingOnMesh_DBManager(dico['forcing_onmesh_database_directory'], mode='w', verbose=0) as mesh_db:
         
         mesh_db_dates, mesh_db_info = mesh_db.get_dates(date_min=expected_forcing_dates[0], date_max=expected_forcing_dates[-1])
         msh_db_dates_set = set(mesh_db_dates)
@@ -163,6 +183,11 @@ def hyfaa_preprocessing_forcing(yaml_file_or_dict, gsmap_folder_local=None, verb
             mesh_db.add(file_info)
             if verbose >= 1:
                 print('Forcing pre-proc: Added file %s to on-mesh DB'%file_info['file_path'])
+        # Set metric
+        if files_info_interp_mesh:
+            latest_time_seconds = sorted([ i.get("date_data") for i in files_info_interp_mesh])[-1].timestamp()
+            prom_mgb_files_most_recent.labels(app="hyfaa", instance="guyane", type="onmesh",
+                                              source=dico['forcing_source']).set(latest_time_seconds)
 
     
     
@@ -208,8 +233,14 @@ def test_main_program():
             
         shutil.rmtree(main_test_dir)
 
-    
-    
+
+def write_prometheus_metrics(registry, metrics_filepath=None, pushgateway_url=None):
+    if pushgateway_url:
+        push_to_gateway(pushgateway_url, job='preprocessing_forcing', registry=registry)
+    if metrics_filepath:
+        write_to_textfile(metrics_filepath, registry)
+
+
 if __name__ == '__main__':
     
     import argparse
@@ -226,4 +257,10 @@ if __name__ == '__main__':
         assert args.input_yaml_file is not None
         hyfaa_preprocessing_forcing(args.input_yaml_file, gsmap_folder_local=args.gsmap_folder_local, verbose=args.verbose)
 
-
+    # prom_gauge.set_to_current_time(process="preprocessing_forcing")
+    prom_job_last_success.labels(app="hyfaa", instance="guyane").set_to_current_time()
+    prom_pushgateway_url = os.getenv("PROM_PUSHGATEWAY_URL")
+    prom_metrics_textfile = os.getenv("PROM_METRICS_TEXTFILE")
+    write_prometheus_metrics(prometheus_registry,
+                             metrics_filepath=prom_metrics_textfile,
+                             pushgateway_url=prom_pushgateway_url)
