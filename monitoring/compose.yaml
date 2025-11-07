@@ -8,7 +8,7 @@ services:
   #     - 9090:9090
   #   restart: unless-stopped
   #   volumes:
-  #     - ./prometheus:/etc/prometheus
+  #     - ./config/prometheus:/etc/prometheus
   #     - prom_data:/prometheus
   # grafana:
   #   image: grafana/grafana
@@ -20,7 +20,7 @@ services:
   #     - GF_SECURITY_ADMIN_USER=admin
   #     - GF_SECURITY_ADMIN_PASSWORD=grafana
   #   volumes:
-  #     - ./grafana:/etc/grafana/provisioning/datasources
+  #     - ./config/grafana:/etc/grafana/provisioning/datasources
   
   pushgateway:
     image: prom/pushgateway
