@@ -55,6 +55,23 @@ NB:
 - The export commands necessary will be shown at the end of the install script.
 - __To avoid entering those lines everytime you open a new terminal, simply add them to your ~/.bashrc__
 
+### 2-steps standard install
+You can also choose to install separately MGB (the fortran binaries) and the hyfaa python package.
+#### Install MGB only
+For a standard install,
+running
+```bash
+bash install_mgb_only.sh
+```
+is enough
+
+#### Install HYFAA only
+- If not done already, create a python virtualenv: `python3 -m venv venv-hyfaa`
+- Activate your virtualenv: `source venv-hyfaa/bin/activate`
+- If not done already, install the dependencies: `pip install -r requirements.txt`
+- And install this hyfaa package in the python virtualenv: `bash install_hyfaa_only.sh`
+Now configure your work_configuration and execute run.sh
+
 ### Standard linux install on CNES cluster
 
 #### Method 1
