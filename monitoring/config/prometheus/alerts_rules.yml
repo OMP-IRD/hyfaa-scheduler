@@ -1,0 +1,21 @@
+groups:
+- name: hyfaa_preprocessing_job
+  labels:
+    team: team-sysadmin
+  rules:
+  - alert: FilesTooOld
+    expr: time() - mgb_files_most_recent_unixtime{app="hyfaa",job="preprocessing_forcing"} > 26 * 60 * 60
+    for: 10m
+    keep_firing_for: 5m
+    labels:
+      severity: email
+    annotations:
+      summary: The MGB files are expected to be updated everyday, so to be at maximum 24h old
+  - alert: JobFailed
+    expr: time() - job_last_success_unixtime{app="hyfaa",job="preprocessing_forcing"} > 26 * 60 * 60
+    for: 10m
+    keep_firing_for: 5m
+    labels:
+      severity: email
+    annotations:
+      summary: The preprocessing runs every day, so should be no older than 24h

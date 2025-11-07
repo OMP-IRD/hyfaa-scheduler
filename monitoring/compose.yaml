@@ -1,15 +1,36 @@
+
+volumes:
+  prom_data:
+
 services:
-  # prometheus:
-  #   image: prom/prometheus
-  #   container_name: prometheus
-  #   command:
-  #     - '--config.file=/etc/prometheus/prometheus.yml'
-  #   ports:
-  #     - 9090:9090
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./config/prometheus:/etc/prometheus
-  #     - prom_data:/prometheus
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    restart: unless-stopped
+    expose:
+      - 9091
+    ports:
+      - "9091:9091"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    volumes:
+      - ./config/prometheus:/etc/prometheus
+      - prom_data:/prometheus
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    restart: unless-stopped
+    volumes:
+      - ./config/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - 9093:9093
   # grafana:
   #   image: grafana/grafana
   #   container_name: grafana
@@ -21,16 +42,4 @@ services:
   #     - GF_SECURITY_ADMIN_PASSWORD=grafana
   #   volumes:
   #     - ./config/grafana:/etc/grafana/provisioning/datasources
-  
-  pushgateway:
-    image: prom/pushgateway
-    container_name: pushgateway
-    restart: unless-stopped
-    expose:
-      - 9091
-    ports:
-      - "9091:9091"
-
-volumes:
-  prom_data:
 
