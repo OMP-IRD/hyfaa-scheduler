@@ -31,17 +31,19 @@ from hyfaa.common.yaml.yaml_parser import load_yaml
 from hyfaa.common.parallel_processing.easy_parallel import simple_parallel_run, Job
 from hyfaa.database.forcing.forcing_grid_db import ForcingGrid_DBManager
 from hyfaa.database.forcing.forcing_onmesh_db import ForcingOnMesh_DBManager
-from prometheus_client import CollectorRegistry, Gauge, Summary, write_to_textfile, push_to_gateway
+from prometheus_client import CollectorRegistry, Gauge, Summary
+
+from hyfaa.utils.monitoring import write_prometheus_metrics
 
 prometheus_registry = CollectorRegistry()
 
 prom_job_duration = Summary("job_duration_seconds", "Duration of a job run",
-                           registry=prometheus_registry, labelnames=["app", "instance"])
+                           registry=prometheus_registry, labelnames=["app", "instance", "process"])
 prom_job_last_success = Gauge(
             "job_last_success_unixtime",
             "Last time a batch job successfully finished",
             registry=prometheus_registry,
-            labelnames=["app", "instance"]
+            labelnames=["app", "instance", "process"]
         )
 
 prom_mgb_files_most_recent = Gauge(
@@ -58,7 +60,7 @@ def get_mesh_cell_centers_from_static_data_file(static_data_file):
     return longitudes, latitudes
 
 
-@prom_job_duration.labels(app="hyfaa", instance="guyane").time()
+@prom_job_duration.labels(app="hyfaa", instance="guyane", process="preprocessing_forcing").time()
 def hyfaa_preprocessing_forcing(yaml_file_or_dict, gsmap_folder_local=None, verbose=None):
     """main scheduler processing function
     
@@ -234,13 +236,6 @@ def test_main_program():
         shutil.rmtree(main_test_dir)
 
 
-def write_prometheus_metrics(registry, metrics_filepath=None, pushgateway_url=None):
-    if pushgateway_url:
-        push_to_gateway(pushgateway_url, job='preprocessing_forcing', registry=registry)
-    if metrics_filepath:
-        write_to_textfile(metrics_filepath, registry)
-
-
 if __name__ == '__main__':
     
     import argparse
@@ -258,7 +253,7 @@ if __name__ == '__main__':
         hyfaa_preprocessing_forcing(args.input_yaml_file, gsmap_folder_local=args.gsmap_folder_local, verbose=args.verbose)
 
     # prom_gauge.set_to_current_time(process="preprocessing_forcing")
-    prom_job_last_success.labels(app="hyfaa", instance="guyane").set_to_current_time()
+    prom_job_last_success.labels(app="hyfaa", instance="guyane", process="preprocessing_forcing").set_to_current_time()
     prom_pushgateway_url = os.getenv("PROM_PUSHGATEWAY_URL")
     prom_metrics_textfile = os.getenv("PROM_METRICS_TEXTFILE")
     write_prometheus_metrics(prometheus_registry,

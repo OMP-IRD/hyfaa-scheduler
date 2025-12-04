@@ -30,13 +30,29 @@ from hyfaa.check_input_parameters.check_input_parameters import *
 from hyfaa.common.yaml.yaml_parser import load_yaml
 from hyfaa.common.parallel_processing.easy_parallel import simple_parallel_run, Job
 from hyfaa.database.assimilation.assimilation_db import Assimilation_Database
-
-
 from hyfaa.database.assimilation.hysope_download_module import get_hysope_assimilation_data as get_assimilation_data
+from prometheus_client import CollectorRegistry, Gauge, Summary
 
+from hyfaa.utils.monitoring import write_prometheus_metrics
 
-    
+prometheus_registry = CollectorRegistry()
 
+prom_job_duration = Summary("job_duration_seconds", "Duration of a job run",
+                           registry=prometheus_registry, labelnames=["app", "instance", "process"])
+prom_job_last_success = Gauge(
+            "job_last_success_unixtime",
+            "Last time a batch job successfully finished",
+            registry=prometheus_registry,
+            labelnames=["app", "instance", "process"]
+        )
+prom_assim_added_records = Summary("mgb_added_records", "Nb of files added in a run of preprocessing_assimilation",
+                           registry=prometheus_registry, labelnames=["app", "instance", "process"])
+prom_assim_removed_records = Summary("mgb_removed_records", "Nb of files removed in a run of preprocessing_assimilation",
+                           registry=prometheus_registry, labelnames=["app", "instance", "process"])
+
+# TODO: add metrics about added and removed records. metrics type should be History ? To check
+
+@prom_job_duration.labels(app="hyfaa", instance="guyane", process="preprocessing_assimilation").time()
 def hyfaa_preprocessing_assimilation(yaml_file_or_dict, verbose=None):
     """main scheduler processing function
     
@@ -132,6 +148,10 @@ def hyfaa_preprocessing_assimilation(yaml_file_or_dict, verbose=None):
                 info_add.append(elem)
             db.remove(info_remove)
             db.add(info_add)
+            prom_assim_added_records.labels(app="hyfaa", instance="guyane", process="preprocessing_assimilation",
+                   ).observe(len(info_add))
+            prom_assim_removed_records.labels(app="hyfaa", instance="guyane", process="preprocessing_assimilation",
+                   ).observe(len(info_remove))
 
             if verbose >= 1:
                 print('Updated database with data requested from conf file %s: %d points added, %d removed'%(source_file, len(info_add), len(info_remove)))
@@ -193,4 +213,9 @@ if __name__ == '__main__':
         assert args.input_yaml_file is not None
         hyfaa_preprocessing_assimilation(args.input_yaml_file, verbose=args.verbose)
 
-
+    prom_job_last_success.labels(app="hyfaa", instance="guyane", process="preprocessing_assimilation").set_to_current_time()
+    prom_pushgateway_url = os.getenv("PROM_PUSHGATEWAY_URL")
+    prom_metrics_textfile = os.getenv("PROM_METRICS_TEXTFILE")
+    write_prometheus_metrics(prometheus_registry,
+                             metrics_filepath=prom_metrics_textfile,
+                             pushgateway_url=prom_pushgateway_url)

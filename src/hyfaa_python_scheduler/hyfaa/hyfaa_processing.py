@@ -35,7 +35,21 @@ from hyfaa.simulation_manager.simulation_manager import SimulationTasks
 import hyfaa.assimilation.EnKF_filter as EnKF_filter
 import hyfaa.assimilation.assim_tools as assim_tools
 
+from prometheus_client import CollectorRegistry, Gauge, Summary
 
+from hyfaa.utils.monitoring import write_prometheus_metrics
+
+prometheus_registry = CollectorRegistry()
+
+
+prom_job_duration = Summary("job_duration_seconds", "Duration of a job run",
+                           registry=prometheus_registry, labelnames=["app", "instance", "process"])
+prom_job_last_success = Gauge(
+            "job_last_success_unixtime",
+            "Last time a batch job successfully finished",
+            registry=prometheus_registry,
+            labelnames=["app", "instance", "process"]
+        )
 
 
 def check_assimilation_static_vars_are_in_hydrological_states(last_hydrological_state_ensemble_paths, list_contr_params):
@@ -73,7 +87,7 @@ def add_assimilation_static_vars_to_hydrological_states(last_hydrological_state_
             print('Loaded static data from param file %s\n -> written to hydrological state file %s'%(param_file, hydro_file))
 
 
-
+@prom_job_duration.labels(app="hyfaa", instance="guyane", process="processing").time()
 def hyfaa_processing(yaml_file_or_dict, verbose=None):
     """main scheduler processing function
     
@@ -516,6 +530,12 @@ if __name__ == '__main__':
     else:
         assert args.input_yaml_file is not None
         hyfaa_processing(args.input_yaml_file, verbose=args.verbose)
-    
+
+    prom_job_last_success.labels(app="hyfaa", instance="guyane", process="processing").set_to_current_time()
+    prom_pushgateway_url = os.getenv("PROM_PUSHGATEWAY_URL")
+    prom_metrics_textfile = os.getenv("PROM_METRICS_TEXTFILE")
+    write_prometheus_metrics(prometheus_registry,
+                             metrics_filepath=prom_metrics_textfile,
+                             pushgateway_url=prom_pushgateway_url)
 
 
