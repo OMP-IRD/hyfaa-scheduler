@@ -4,6 +4,7 @@
 # (Handling metrics)
 
 from prometheus_client import write_to_textfile, push_to_gateway
+from urllib.error import URLError
 
 def write_prometheus_metrics(registry, metrics_filepath=None, pushgateway_url=None):
     """
@@ -16,6 +17,13 @@ def write_prometheus_metrics(registry, metrics_filepath=None, pushgateway_url=No
     :return:
     """
     if pushgateway_url:
-        push_to_gateway(pushgateway_url, job='preprocessing_forcing', registry=registry)
+        try:
+            push_to_gateway(pushgateway_url, job='preprocessing_forcing', registry=registry)
+        except URLError as e:
+            print(f"Error while pushing metrics. Cannot connect to pushgateway at {pushgateway_url}. Error message is {e}")
+
     if metrics_filepath:
-        write_to_textfile(metrics_filepath, registry)
+        try:
+            write_to_textfile(metrics_filepath, registry)
+        except IOError as e:
+            print(f"Error while writing metrics to file {metrics_filepath}. Error message is {e}")
