@@ -1,4 +1,3 @@
-
 # HYFAA V4 : Global Hydrological Operational Forecast and Assimilated System version 4
 
 Install markdown reader browser extension, enable access to urls, and open this file to view it with a nicer rendering.
@@ -6,21 +5,23 @@ Install markdown reader browser extension, enable access to urls, and open this 
 ## About HYFAA
 
 HYFAA is a python scheduler for operational hydrological forecasting. To achieve this, it combines :
+
 - a hydrological simulation model : MGB-IPH
 - retrieval routines that gather the necessary forcing and assimilation data into organised databases
 - a main operational scheduler that configures MGB-IPH simulations and handles assimilation routines
 - a post-processing routine to make easy-to-use files containing main variables
 
 HYFAA is composed of :
+
 - python HYFAA code provided in the __src/scheduler_python__ folder
 - fortran MGB-IPH code provided in the __src/MGB-IPH__ folder called by the python HYFAA code
 
 Hardware requirements :
+
 - CPU : no minimum requirements (at least 1 ^^)
 - RAM : 8GB minimum, or more for large ensemble calculations (post-processing step requires it)
-- Disk space : it is recommended to have 1GB + 1MB * (ensemble_size * number_of_days) i.e. ~ 185GB space for a 10 year simulation with an ensemble size of 50
-
-
+- Disk space : it is recommended to have 1GB + 1MB * (ensemble_size * number_of_days) i.e. ~ 185GB space for a 10 year
+  simulation with an ensemble size of 50
 
 ## Install HYFAA
 
@@ -38,44 +39,61 @@ Make docker image with `make_docker.sh`
 3. Run `./install.sh`
 
 NB:
-- This will store `hyfaa` python modules in your default python site-package which is already in your import paths, so no action required.
-- `mgb_iph` script will be stored in `/usr/local/bin` (requires root privileges) which should be in your $PATH, so no action should be necessary.
+
+- This will store `hyfaa` python modules in your default python site-package which is already in your import paths, so
+  no action required.
+- `mgb_iph` script will be stored in `/usr/local/bin` (requires root privileges) which should be in your $PATH, so no
+  action should be necessary.
 
 #### Local install
+
 Use for instance if you do not have root privileges on your machine
 
-3. Run `./install.sh ${mgb_iph_install_dir}`, `${mgb_iph_install_dir}` being any directory (must not exist prior to installation).
-4. You will need to add paths to $PATH and $PYTHONPATH to directories within `${mgb_iph_install_dir}` that contain `hyfaa` and `mgb_iph` executables:
+3. Run `./install.sh ${mgb_iph_install_dir}`, `${mgb_iph_install_dir}` being any directory (must not exist prior to
+   installation).
+4. You will need to add paths to $PATH and $PYTHONPATH to directories within `${mgb_iph_install_dir}` that contain
+   `hyfaa` and `mgb_iph` executables:
+
 ```
 export PATH=${mgb_iph_install_dir}:${mgb_iph_install_dir}/bin:$PATH
 export PYTHONPATH=$(find ${mgb_iph_install_dir} -type d -iname 'site-packages'):$PYTHONPATH
 ```
 
 NB:
+
 - The export commands necessary will be shown at the end of the install script.
 - __To avoid entering those lines everytime you open a new terminal, simply add them to your ~/.bashrc__
 
 ### 2-steps standard install
+
 You can also choose to install separately MGB (the fortran binaries) and the hyfaa python package.
+
 #### Install MGB only
+
 For a standard install,
 running
+
 ```bash
 bash install_mgb_only.sh
 ```
+
 is enough
 
 #### Install HYFAA only
+
 - If not done already, create a python virtualenv: `python3 -m venv venv-hyfaa`
 - Activate your virtualenv: `source venv-hyfaa/bin/activate`
 - If not done already, install the dependencies: `pip install -r requirements.txt`
 - And install this hyfaa package in the python virtualenv: `bash install_hyfaa_only.sh`
-Now configure your work_configuration and execute run.sh
+  Now configure your work_configuration and execute run.sh
 
 ### Standard linux install on CNES cluster
 
 #### Method 1
-This is the preferred method as it installs an independent python environment and therefore allows more flexibility to add other libraries in the future and prevents problems with changes on HAL python modules.
+
+This is the preferred method as it installs an independent python environment and therefore allows more flexibility to
+add other libraries in the future and prevents problems with changes on HAL python modules.
+
 - `module purge` to avoid module conflicts
 - `module load cmake netcdf/4.4.1 conda`
 - `conda create -n hyfaa_env python=3.7`
@@ -83,42 +101,100 @@ This is the preferred method as it installs an independent python environment an
 - Follow __Local install__ from linux PC without docker installation from step 2
 
 #### Method 2
-This solely relies on HAL modules for python environment, rendering installation easier but changes on HAL python module may cause installation to fail in the future, and SALib library is not available.
+
+This solely relies on HAL modules for python environment, rendering installation easier but changes on HAL python module
+may cause installation to fail in the future, and SALib library is not available.
 
 - `module purge` to avoid module conflicts
 - `module load cmake netcdf/4.4.1 python`
 - Follow __Local install__ from linux PC without docker installation from step 3
 
-
 ### Windows or Mac
 
 Use docker (best option), or use a unix virtual machine.
 
-
 ## Use HYFAA
 
 - choose a configuration folder in `work_configurations`
-- follow the `README.md` inside of the configuration folder to download input_data folder (hydrological static data configuration) and initialized `databases` (may be optional)
-
+- follow the `README.md` inside of the configuration folder to download input_data folder (hydrological static data
+  configuration) and initialized `databases` (may be optional)
 
 #### With Docker
 
 - edit `run_docker.sh` to
-  - mount the configuration folder chosen as `/work`,
-  - adjust the hydrowebnext credentials (API key)
-and launch `run_docker.sh`
+    - mount the configuration folder chosen as `/work`,
+    - adjust the hydrowebnext credentials (API key)
+      and launch `run_docker.sh`
 
 #### Without docker
 
-- set and environment variable named `EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY`, value is your hydroweb.next API key. 
-  - On linux environment, it could be done in the console: ` export EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY=yourverysecretapikey`
-  - On Windows environment, editing the environment variables is usually done in a graphical user interface
+- set and environment variable named `EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY`, value is your hydroweb.next API
+  key.
+    - On linux environment, it could be done in the console:
+      ` export EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY=yourverysecretapikey`
+    - On Windows environment, editing the environment variables is usually done in a graphical user interface
 - go to the chosen configuration folder and launch `run.sh`
 
 #### Using PBS on CNES cluster
 
 - go to the chosen configuration folder and launch `./run_pbs.py`
 
-__WARNING:__ So that modules and paths, pythonpaths are set on the node, you must either add them to your ~/.bashrc, or to the `run.sh` script in the configuration folder.
+__WARNING:__ So that modules and paths, pythonpaths are set on the node, you must either add them to your ~/.bashrc, or
+to the `run.sh` script in the configuration folder.
 
 __NB:__ You can use the `--pbs_name` option to set your job name; `hyfaa` by default.
+
+## Optimized docker image
+
+A docker image optimized for the size can be found at https://hub.docker.com/r/pigeosolutions/hyfaa-scheduler/.
+
+### How to use this image
+
+Recent images are tagged by the datetime + git commit hash. You're safe to assume that the most recent tag will be your
+best option. `latest` should always point to it too.
+
+#### Volumes
+
+As for other ways to run the hyfaa scheduler, you need to attach a 'work configuration' volume. It needs to be mounted
+under `/work`
+
+#### Environment variables
+
+The following environment variables will be used if provided:
+
+- `EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY`: [necessary] your hydroweb.next API key
+- `EODAG__HYDROWEB_NEXT__SEARCH__TIMEOUT`: [probably optional] but you might want to set it to a large-enough time. '60'
+  seems to be fine.
+- `CLEAR_LOCKS`: [optional] sometimes the run will fails because some .lock files remain on a given sqlite database. It
+  often happens if the last run was unsuccessful. For automated runs, it might be more or a hindrance than a help.
+  Setting `CLEAR_LOCKS=true` will trigger a deletion of any trailing .lock file at the start of the run, making sure
+  they won't prevent the run to complete.
+- `HYFAA_LOG_LEVEL`: [optional] Will at some point replace the verbosity parameter of the old scripts. For now only
+  applies for forcing preprocessing. Set to 'debug' to get more information about the run.
+- `PROM_PUSHGATEWAY_URL`: [optional] URL of the prometheus pushgateway to push metrics to, if you plan to use monitoring
+- `MPLCONFIGDIR`: [probably optional] Matplotlib config directory. A default value should be set, but not sure. It's
+  safe to set it to `/work/.config`
+
+#### Running the process
+
+```bash
+docker run -it --rm --name hyfaa-scheduler \
+  -v ./work_configurations/operational_guyane_gsmap:/work \
+  -e EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY=yourapikey \
+  -e CLEAR_LOCKS=true \
+  pigeosolutions/hyfaa-scheduler:latest
+```
+
+#### Running just one processing step
+
+You can also run just one preprocessing step, individually if necessary. For instance:
+
+```bash
+docker run -it --rm --name hyfaa-scheduler \
+  -v ./work_configurations/operational_guyane_gsmap:/work \
+  -e EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY=yourapikey \
+  -e CLEAR_LOCKS=true \
+  -e hyfaa_workdir=/work/ \
+  -e hyfaa_temp_dir=/work/temp/ \
+  pigeosolutions/hyfaa-scheduler:latest hyfaa_preprocessing_forcing.py --input_yaml_file /work/config/input_mgbstandard_solution.yaml
+```
