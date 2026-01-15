@@ -163,8 +163,8 @@ under `/work`
 The following environment variables will be used if provided:
 
 - `EODAG__HYDROWEB_NEXT__AUTH__CREDENTIALS__APIKEY`: [necessary] your hydroweb.next API key
-- `EODAG__HYDROWEB_NEXT__SEARCH__TIMEOUT`: [probably optional] but you might want to set it to a large-enough time. '60'
-  seems to be fine.
+- `EODAG__HYDROWEB_NEXT__SEARCH__TIMEOUT`: [optional] but you might want to set it to a large-enough time. `60`
+  seems to be fine for most cases.
 - `CLEAR_LOCKS`: [optional] sometimes the run will fails because some .lock files remain on a given sqlite database. It
   often happens if the last run was unsuccessful. For automated runs, it might be more or a hindrance than a help.
   Setting `CLEAR_LOCKS=true` will trigger a deletion of any trailing .lock file at the start of the run, making sure
@@ -172,7 +172,7 @@ The following environment variables will be used if provided:
 - `HYFAA_LOG_LEVEL`: [optional] Will at some point replace the verbosity parameter of the old scripts. For now only
   applies for forcing preprocessing. Set to 'debug' to get more information about the run.
 - `PROM_PUSHGATEWAY_URL`: [optional] URL of the prometheus pushgateway to push metrics to, if you plan to use monitoring
-- `MPLCONFIGDIR`: [probably optional] Matplotlib config directory. A default value should be set, but not sure. It's
+- `MPLCONFIGDIR`: [optional] Matplotlib config directory. A default value should be set, but not sure. It's
   safe to set it to `/work/.config`
 
 #### Running the process
