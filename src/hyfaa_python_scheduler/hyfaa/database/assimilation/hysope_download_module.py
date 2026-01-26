@@ -155,6 +155,9 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
     ids_mappings = {}
     filtered_results = []
     for product in search_results:
+        if len(product.assets.data) == 0:
+            custom_logger.warning(f"No data found for product {product.properties['id']}")
+            continue
         file_name = list(product.assets.data.keys())[0]
         station_name = get_name_from_hydrowebnext_filename(file_name)
         custom_logger.info(f"{station_name}      ({product.properties['id']})")
