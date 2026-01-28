@@ -35,6 +35,12 @@ from shutil import rmtree
 
 hydroweb_next_stac_url = "https://hydroweb.next.theia-land.fr/api/v1/rs-catalog/stac/"
 
+custom_logger = logging.getLogger("Hydroweb.next")
+custom_logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)-15s %(name)-32s [%(levelname)-8s] %(message)s')
+handler = logging.StreamHandler()  # Use a different handler if needed
+handler.setFormatter(formatter)
+custom_logger.addHandler(handler)
 
 def get_name_from_hydrowebnext_filename(filename) -> str:
     """
@@ -109,12 +115,6 @@ def get_hysope_wsh_hydrowebnext(sv_dict, min_date=None, max_date=None, verbose=1
 
     setup_logging(0) # 0: nothing, 1: only progress bars, 2: INFO, 3: DEBUG
     # Add custom logger
-    custom_logger = logging.getLogger("Hydroweb.next")
-    custom_logger.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)-15s %(name)-32s [%(levelname)-8s] %(message)s')
-    handler = logging.StreamHandler()  # Use a different handler if needed
-    handler.setFormatter(formatter)
-    custom_logger.addHandler(handler)
 
     custom_logger.info(f"Start retrieving data from hydroweb.next API")
 
@@ -229,20 +229,23 @@ def get_hysope_flowrates(sv_dict, min_date=None, max_date=None, verbose=1):
 
     # Check for invalid values
     for sv_name, sv_info in sv_dict.items():
-        dico_out[sv_name] = {'dates': wsh_info[sv_name]['dates']}
-        flowrates_loc = np.ma.masked_invalid(
-            (np.array(wsh_info[sv_name]['wsh'], dtype=np.float64) - float(sv_info['coeff_Z0'])))
-        flowrates_loc.mask[flowrates_loc <= 0.] = True
-        flowrates_loc = np.ma.masked_invalid(float(sv_info['coeff_A']) * (flowrates_loc ** float(sv_info['coeff_B'])))
-        if np.any(flowrates_loc.mask) and verbose >= 1:
-            print('Invalid values in SV %s for dates :\n%s' % (
-                sv_name, '\n'.join(['  ' + wsh_info[sv_name]['dates'][ii].strftime('%Y-%m-%dT%H:%M:%S') \
-                                    for ii in range(len(wsh_info[sv_name]['dates'])) if flowrates_loc.mask[ii]])))
-        dico_out[sv_name] = {
-            'dates': [wsh_info[sv_name]['dates'][ii] for ii in range(len(wsh_info[sv_name]['dates'])) if
-                      not flowrates_loc.mask[ii]], \
-            'flowrate': [flowrates_loc[ii] for ii in range(len(wsh_info[sv_name]['dates'])) if
-                         not flowrates_loc.mask[ii]]}
+        try:
+            dico_out[sv_name] = {'dates': wsh_info[sv_name]['dates']}
+            flowrates_loc = np.ma.masked_invalid(
+                (np.array(wsh_info[sv_name]['wsh'], dtype=np.float64) - float(sv_info['coeff_Z0'])))
+            flowrates_loc.mask[flowrates_loc <= 0.] = True
+            flowrates_loc = np.ma.masked_invalid(float(sv_info['coeff_A']) * (flowrates_loc ** float(sv_info['coeff_B'])))
+            if np.any(flowrates_loc.mask) and verbose >= 1:
+                print('Invalid values in SV %s for dates :\n%s' % (
+                    sv_name, '\n'.join(['  ' + wsh_info[sv_name]['dates'][ii].strftime('%Y-%m-%dT%H:%M:%S') \
+                                        for ii in range(len(wsh_info[sv_name]['dates'])) if flowrates_loc.mask[ii]])))
+            dico_out[sv_name] = {
+                'dates': [wsh_info[sv_name]['dates'][ii] for ii in range(len(wsh_info[sv_name]['dates'])) if
+                          not flowrates_loc.mask[ii]], \
+                'flowrate': [flowrates_loc[ii] for ii in range(len(wsh_info[sv_name]['dates'])) if
+                             not flowrates_loc.mask[ii]]}
+        except KeyError as e:
+            custom_logger.warning(f"SV {sv_name} not found in wsh_info. Skipping it.")
     return dico_out
 
 
