@@ -1,3 +1,16 @@
+# _ARCHIVED_
+
+***This repo is no longer maintained and has been archived (switched to read-only mode).***
+
+***The activity has moved to https://github.com/Hydro-Matters/mgb-ope which replaces and supersedes this repo.***
+
+---
+
+<br />
+<br />
+<br />
+<br />
+
 # HYFAA V4 : Global Hydrological Operational Forecast and Assimilated System version 4
 
 Install markdown reader browser extension, enable access to urls, and open this file to view it with a nicer rendering.
